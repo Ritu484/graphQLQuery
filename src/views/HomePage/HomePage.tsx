@@ -1,96 +1,40 @@
-import * as React from "react";
-import {
-  Nav,
-  INavLink,
-  INavStyles,
-  INavLinkGroup,
-} from "@fluentui/react/lib/Nav";
+import React from "react";
+import { Nav, initializeIcons } from "@fluentui/react";
 
-const navStyles: Partial<INavStyles> = {
+const navigationStyles = {
   root: {
-    width: 208,
-    height: 350,
+    height: "100vh",
     boxSizing: "border-box",
     border: "1px solid #eee",
     overflowY: "auto",
+    paddingTop: "10vh",
   },
 };
 
-const navLinkGroups: INavLinkGroup[] = [
+const links = [
   {
     links: [
       {
-        name: "Home",
-        url: "http://example.com",
-        expandAriaLabel: "Expand Home section",
-        links: [
-          {
-            name: "Activity",
-            url: "http://msn.com",
-            key: "key1",
-            target: "_blank",
+        name: "All Planets",
+        key: "key1",
+        url: "/TestPage",
+        iconProps: {
+          iconName: "News",
+          styles: {
+            root: {
+              fontSize: 20,
+              color: "#106ebe",
+            },
           },
-          {
-            name: "MSN",
-            url: "http://msn.com",
-            disabled: true,
-            key: "key2",
-            target: "_blank",
-          },
-        ],
-        isExpanded: true,
-      },
-      {
-        name: "Documents",
-        url: "http://example.com",
-        key: "key3",
-        isExpanded: true,
-        target: "_blank",
-      },
-      {
-        name: "Pages",
-        url: "http://msn.com",
-        key: "key4",
-        target: "_blank",
-      },
-      {
-        name: "Notebook",
-        url: "http://msn.com",
-        key: "key5",
-        disabled: true,
-      },
-      {
-        name: "Communication and Media",
-        url: "http://msn.com",
-        key: "key6",
-        target: "_blank",
-      },
-      {
-        name: "News",
-        url: "http://cnn.com",
-        icon: "News",
-        key: "key7",
-        target: "_blank",
+        },
       },
     ],
   },
 ];
 
- const HomePage: React.FunctionComponent = () => {
-  return (
-    <Nav
-      onLinkClick={_onLinkClick}
-      selectedKey="key3"
-      ariaLabel="Nav basic example"
-      styles={navStyles}
-      groups={navLinkGroups}
-    />
-  );
+const HomePage = () => {
+  initializeIcons();
+  return <Nav groups={links} selectedKey="key1" styles={navigationStyles} />;
 };
 
-function _onLinkClick(ev?: React.MouseEvent<HTMLElement>, item?: INavLink) {
-  if (item && item.name === "News") {
-    alert("News link clicked");
-  }
-}
 export default HomePage;
