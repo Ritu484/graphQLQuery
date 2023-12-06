@@ -1,5 +1,5 @@
 import { Controller } from "react-hook-form";
-import { TextField, MaskedTextField } from "@fluentui/react/lib/TextField";
+import { TextField } from "@fluentui/react/lib/TextField";
 
 export const ControlledTextField = (
   props:any
@@ -21,7 +21,6 @@ export const ControlledTextField = (
           onBlur={onBlur}
           name={fieldName}
           errorMessage={error && error.message}
-          defaultValue={undefined}
         />
       )}
     />

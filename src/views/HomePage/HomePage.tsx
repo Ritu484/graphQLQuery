@@ -1,4 +1,3 @@
-import React from "react";
 import { Nav, initializeIcons } from "@fluentui/react";
 
 const navigationStyles = {

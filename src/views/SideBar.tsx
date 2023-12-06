@@ -4,7 +4,6 @@ import {
   DetailsList,
   IColumn,
   DetailsListLayoutMode,
-  Selection,
   SelectionMode,
   ConstrainMode,
 } from "@fluentui/react/lib/DetailsList";
@@ -27,9 +26,7 @@ const SideBar: React.FunctionComponent = () => {
       key: "name",
       name: "Name",
       isResizable: true,
-
       minWidth: 100,
-
       onRender: (item) => (
         // eslint-disable-next-line react/jsx-no-bind
         <Link
@@ -49,7 +46,6 @@ const SideBar: React.FunctionComponent = () => {
       minWidth: 50,
       maxWidth: 200,
       isResizable: true,
-
       onRender: (item) => (
         // eslint-disable-next-line react/jsx-no-bind
 
@@ -123,8 +119,6 @@ const SideBar: React.FunctionComponent = () => {
 
   return (
     <div style={{ display: "flex" }}>
-      {/* {JSON.stringify(data)} */}
-      {/* {data.allPlanets.planets[0].name} */}
       <DetailsList
         items={data.allPlanets.planets}
         columns={columns}
@@ -132,11 +126,6 @@ const SideBar: React.FunctionComponent = () => {
         layoutMode={DetailsListLayoutMode.fixedColumns}
         constrainMode={ConstrainMode.unconstrained}
         isHeaderVisible={true}
-        setKey="set"
-        selectionPreservedOnEmptyClick={true}
-        ariaLabelForSelectionColumn="Toggle selection"
-        ariaLabelForSelectAllCheckbox="Toggle selection for all items"
-        checkButtonAriaLabel="Row checkbox"
       />
       <div style={{ width: "800px" }}>
         {isOpen && (

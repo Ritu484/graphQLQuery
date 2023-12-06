@@ -1,4 +1,4 @@
-import React from "react";
+import React, { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { FluentProvider, teamsLightTheme } from "@fluentui/react-components";
 import {
@@ -33,11 +33,9 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <FluentProvider theme={teamsLightTheme}>
     <ApolloProvider client={client}>
       <App />
     </ApolloProvider>
-  </FluentProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
