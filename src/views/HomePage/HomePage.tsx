@@ -17,7 +17,7 @@ const links = [
       {
         name: "All Planets",
         key: "key1",
-        url: "/TestPage",
+        url: "/SideBar",
         iconProps: {
           iconName: "News",
           styles: {

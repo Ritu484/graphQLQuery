@@ -16,4 +16,48 @@ export const AllPlanets = gql`
     }
   }
 `;
+export const Planet = gql`
+  query Planet($id: ID!) {
+    planet(id: $id) {
+      name
+      climates
+      gravity
+      population
+      rotationPeriod
+      terrains
+      surfaceWater
+      id
+      diameter
+      created
+      edited
+      filmConnection {
+        films {
+          id
+          episodeID
+          edited
+        }
+      }
+      orbitalPeriod
+      residentConnection {
+        totalCount
+        residents {
+          edited
+          created
+          birthYear
+          height
+          mass
+          name
+        }
+      }
+    }
+  }
+`;
+const GET_DOG_PHOTO = gql`
+  query Dog($breed: String!) {
+    dog(breed: $breed) {
+      id
+      displayImage
+    }
+  }
+`;
 
