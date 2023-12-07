@@ -13,7 +13,7 @@ import { Link } from "@fluentui/react/lib/Link";
 import { useState } from "react";
 import { PanelComponent } from "../components/PanelComponent";
 
-const SideBar: React.FunctionComponent = () => {
+const AllPlanetListView: React.FunctionComponent = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { loading, error, data } = useQuery(AllPlanets);
   const [recordID, setRecordID] = useState<string>("");
@@ -129,10 +129,14 @@ const SideBar: React.FunctionComponent = () => {
       />
       <div style={{ width: "800px" }}>
         {isOpen && (
-          <PanelComponent recordID={recordID} isOpen={isOpen} setIsOpen ={setIsOpen}/>
+          <PanelComponent
+            recordID={recordID}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+          />
         )}
       </div>
     </div>
   );
 };
-export default SideBar;
+export default AllPlanetListView;

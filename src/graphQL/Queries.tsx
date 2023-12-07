@@ -35,6 +35,9 @@ export const Planet = gql`
           id
           episodeID
           edited
+          director
+          producers
+          releaseDate
         }
       }
       orbitalPeriod

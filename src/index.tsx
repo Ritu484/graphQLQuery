@@ -11,7 +11,7 @@ import {
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import App from "./App";
-import SideBar from "./views/SideBar";
+import AllPlanetListView from "./views/AllPlanetListView";
 import reportWebVitals from "./reportWebVitals";
 
 const client = new ApolloClient({
@@ -25,17 +25,17 @@ const router = createBrowserRouter([
     element: <div>Hello world!</div>,
   },
   {
-    path: "/SideBar",
-    element: <SideBar />,
+    path: "/AllPlanetListView",
+    element: <AllPlanetListView />,
   },
 ]);
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-    <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>
+  <ApolloProvider client={client}>
+    <App />
+  </ApolloProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

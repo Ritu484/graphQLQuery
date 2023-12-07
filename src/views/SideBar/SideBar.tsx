@@ -16,7 +16,7 @@ const links = [
       {
         name: "All Planets",
         key: "key1",
-        url: "/SideBar",
+        url: "/AllPlanetListView",
         iconProps: {
           iconName: "News",
           styles: {
@@ -31,9 +31,9 @@ const links = [
   },
 ];
 
-const HomePage = () => {
+const SideBar = () => {
   initializeIcons();
   return <Nav groups={links} selectedKey="key1" styles={navigationStyles} />;
 };
 
-export default HomePage;
+export default SideBar;
