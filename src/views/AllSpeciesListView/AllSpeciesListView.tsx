@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { AllPlanets } from "../graphQL/Queries";
+import { AllSpecies } from "../../graphQL/Queries";
 import {
   DetailsList,
   IColumn,
@@ -11,20 +11,20 @@ import {
 import { Link } from "@fluentui/react/lib/Link";
 
 import { useState } from "react";
-import { PanelComponent } from "../components/PanelComponent";
+import { SpeciesPanelComponent } from "./components/SpeciesPanelComponent";
 
-const AllPlanetListView: React.FunctionComponent = () => {
+const AllSpeciesListView: React.FunctionComponent = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { loading, error, data } = useQuery(AllPlanets);
+  const { loading, error, data } = useQuery(AllSpecies);
   const [recordID, setRecordID] = useState<string>("");
 
- // console.log(data);
+  //console.log(data);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;
   let columns: IColumn[] = [
     {
-      key: "name",
-      name: "Name",
+      key: "classification",
+      name: "classification",
       isResizable: true,
       minWidth: 100,
       onRender: (item) => (
@@ -36,13 +36,13 @@ const AllPlanetListView: React.FunctionComponent = () => {
             setIsOpen(true);
           }}
         >
-          {item.name}
+          {item.classification}
         </Link>
       ),
     } as IColumn,
     {
-      key: "climates",
-      name: "Climates",
+      key: "eyeColors",
+      name: "Eye Colors",
       minWidth: 50,
       maxWidth: 200,
       isResizable: true,
@@ -50,69 +50,65 @@ const AllPlanetListView: React.FunctionComponent = () => {
         // eslint-disable-next-line react/jsx-no-bind
 
         <div style={{ whiteSpace: "pre-wrap" }}>
-          {item.climates.map((value: string, index: number) =>
-            index < item.climates.length - 1 ? value + "," : value
+          {item.eyeColors.map((value: string, index: number) =>
+            index < item.eyeColors.length - 1 ? value + "," : value
           )}
         </div>
       ),
     } as IColumn,
     {
-      key: "gravity",
-      name: "Gravity",
+      key: "created",
+      name: "Created",
       minWidth: 50,
       maxWidth: 200,
       isResizable: true,
       onRender: (item) => (
         // eslint-disable-next-line react/jsx-no-bind
-        <div> {item.gravity}</div>
+        <div> {item.created}</div>
       ),
     } as IColumn,
     {
-      key: "population",
-      name: "Population",
+      key: "designation",
+      name: "Designation",
       minWidth: 50,
       maxWidth: 200,
       isResizable: true,
       onRender: (item) => (
         // eslint-disable-next-line react/jsx-no-bind
-        <div> {item.population}</div>
+        <div> {item.designation}</div>
       ),
     } as IColumn,
     {
-      key: "rotationPeriod",
-      name: "Rotation Period",
+      key: "edited",
+      name: "Edited",
       minWidth: 50,
       maxWidth: 200,
       isResizable: true,
       onRender: (item) => (
         // eslint-disable-next-line react/jsx-no-bind
-        <div> {item.rotationPeriod}</div>
+        <div> {item.edited}</div>
       ),
     } as IColumn,
     {
-      key: "terrains",
-      name: "Terrains",
+      key: "averageLifespan",
+      name: "Average Life pan",
       minWidth: 50,
       maxWidth: 200,
       isResizable: true,
       onRender: (item) => (
         // eslint-disable-next-line react/jsx-no-bind
-        <div style={{ whiteSpace: "pre-wrap" }}>
-          {item.terrains.map((value: string, index: number) =>
-            index < item.terrains.length - 1 ? value + "," : value
-          )}
-        </div>
+        <div> {item.averageLifespan}</div>
       ),
     } as IColumn,
     {
-      key: "surfaceWater",
-      name: "Surface Water",
+      key: "averageHeight",
+      name: "averageHeight",
       minWidth: 50,
       maxWidth: 200,
       isResizable: true,
       onRender: (item) => (
         // eslint-disable-next-line react/jsx-no-bind
-        <div> {item.surfaceWater}</div>
+        <div> {item.averageHeight}</div>
       ),
     } as IColumn,
   ];
@@ -120,7 +116,7 @@ const AllPlanetListView: React.FunctionComponent = () => {
   return (
     <div style={{ display: "flex" }}>
       <DetailsList
-        items={data.allPlanets.planets}
+        items={data.allSpecies.species}
         columns={columns}
         selectionMode={SelectionMode.none}
         layoutMode={DetailsListLayoutMode.fixedColumns}
@@ -129,7 +125,7 @@ const AllPlanetListView: React.FunctionComponent = () => {
       />
       <div style={{ width: "800px" }}>
         {isOpen && (
-          <PanelComponent
+          <SpeciesPanelComponent
             recordID={recordID}
             isOpen={isOpen}
             setIsOpen={setIsOpen}
@@ -139,4 +135,4 @@ const AllPlanetListView: React.FunctionComponent = () => {
     </div>
   );
 };
-export default AllPlanetListView;
+export default AllSpeciesListView;

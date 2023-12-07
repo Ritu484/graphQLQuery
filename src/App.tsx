@@ -1,5 +1,6 @@
 import SideBar from "./views/SideBar";
 import AllPlanetListView from "./views/AllPlanetListView";
+import AllSpeciesListView from "./views/AllSpeciesListView";
 import Test2 from "./views/Test2";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
@@ -17,6 +18,10 @@ function App() {
             <Route
               path="/AllPlanetListView"
               element={<AllPlanetListView />}
+            ></Route>
+            <Route
+              path="/AllSpeciesListView"
+              element={<AllSpeciesListView />}
             ></Route>
           </Routes>
         </div>

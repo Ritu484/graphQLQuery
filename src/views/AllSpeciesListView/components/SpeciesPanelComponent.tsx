@@ -1,18 +1,21 @@
 import React, { useEffect } from "react";
-import {
-  useParams,
-} from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Stack } from "@fluentui/react";
 import { Label } from "@fluentui/react/lib/Label";
 import { Panel, PanelType } from "@fluentui/react/lib/Panel";
 import {
   DocumentCard,
+  DocumentCardActivity,
+  DocumentCardDetails,
+  DocumentCardPreview,
   DocumentCardTitle,
+  IDocumentCardPreviewProps,
+  DocumentCardType,
+  IDocumentCardActivityPerson,
 } from "@fluentui/react/lib/DocumentCard";
 import { useQuery } from "@apollo/client";
-import { Planet } from "../graphQL/Queries";
-import { ControlledTextField } from "./ControlledTextField";
+import { Species } from "../../../graphQL/Queries";
+import { ControlledTextField } from "../../../components/ControlledTextField";
 import {
   DetailsList,
   IColumn,
@@ -26,43 +29,19 @@ interface IMyProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const PanelComponent: React.FunctionComponent<IMyProps> = ({
+export const SpeciesPanelComponent: React.FunctionComponent<IMyProps> = ({
   recordID,
   isOpen,
   setIsOpen,
 }) => {
-   let { id } = useParams();
   const { reset, control } = useForm();
 
   // const [isOpen, setIsOpen] = React.useState(true);
-  const { loading, error, data } = useQuery(Planet, {
-    variables: { id: recordID },
+  const { loading, error, data } = useQuery(Species, {
+    variables: { speciesId: recordID },
   });
-  //console.log(JSON.stringify(data?.planet.filmConnection.films));
+  console.log(JSON.stringify(data?.species?.homeworld?.name));
   let columns: IColumn[] = [
-    {
-      key: "episodeID",
-      name: "Episode ID",
-      minWidth: 50,
-      maxWidth: 200,
-      isResizable: true,
-      onRender: (item) => (
-        // eslint-disable-next-line react/jsx-no-bind
-        <div> {item.episodeID}</div>
-      ),
-    } as IColumn,
-    {
-      key: "edited",
-      name: "Edited",
-      minWidth: 50,
-      maxWidth: 200,
-      isResizable: true,
-      onRender: (item) => (
-        // eslint-disable-next-line react/jsx-no-bind
-        <div> {item.edited}</div>
-      ),
-    } as IColumn,
-
     {
       key: "director",
       name: "director",
@@ -82,7 +61,11 @@ export const PanelComponent: React.FunctionComponent<IMyProps> = ({
       isResizable: true,
       onRender: (item) => (
         // eslint-disable-next-line react/jsx-no-bind
-        <div> {item.director}</div>
+        <div style={{ whiteSpace: "pre-wrap" }}>
+          {item.producers.map((value: string, index: number) =>
+            index < item.producers.length - 1 ? value + "," : value
+          )}
+        </div>
       ),
     } as IColumn,
     {
@@ -96,18 +79,15 @@ export const PanelComponent: React.FunctionComponent<IMyProps> = ({
         <div> {item.releaseDate}</div>
       ),
     } as IColumn,
-  ];
-  //columnsResidents
-  let columnsResidents: IColumn[] = [
     {
-      key: "edited",
-      name: "edited",
+      key: "title",
+      name: "title",
       minWidth: 50,
       maxWidth: 200,
       isResizable: true,
       onRender: (item) => (
         // eslint-disable-next-line react/jsx-no-bind
-        <div> {item.edited}</div>
+        <div> {item.title}</div>
       ),
     } as IColumn,
     {
@@ -121,58 +101,21 @@ export const PanelComponent: React.FunctionComponent<IMyProps> = ({
         <div> {item.created}</div>
       ),
     } as IColumn,
-    {
-      key: "birthYear",
-      name: "birthYear",
-      minWidth: 50,
-      maxWidth: 200,
-      isResizable: true,
-      onRender: (item) => (
-        // eslint-disable-next-line react/jsx-no-bind
-        <div> {item.birthYear}</div>
-      ),
-    } as IColumn,
-    {
-      key: "height",
-      name: "height",
-      minWidth: 50,
-      maxWidth: 200,
-      isResizable: true,
-      onRender: (item) => (
-        // eslint-disable-next-line react/jsx-no-bind
-        <div> {item.height}</div>
-      ),
-    } as IColumn,
-    {
-      key: "mass",
-      name: "mass",
-      minWidth: 50,
-      maxWidth: 200,
-      isResizable: true,
-      onRender: (item) => (
-        // eslint-disable-next-line react/jsx-no-bind
-        <div> {item.mass}</div>
-      ),
-    } as IColumn,
-    {
-      key: "name",
-      name: "name",
-      minWidth: 50,
-      maxWidth: 200,
-      isResizable: true,
-      onRender: (item) => (
-        // eslint-disable-next-line react/jsx-no-bind
-        <div> {item.name}</div>
-      ),
-    } as IColumn,
   ];
+
   useEffect(() => {
     reset({
-      name: data?.planet.name,
-      climates: data?.planet.climates,
-      gravity: data?.planet.gravity,
-      population: data?.planet.population,
-      rotationPeriod: data?.planet.rotationPeriod,
+      classification: data?.species.classification,
+      created: data?.species.created,
+      averageHeight: data?.species.averageHeight,
+      averageLifespan: data?.species.averageLifespan,
+      designation: data?.species.designation,
+      hairColors: data?.species.hairColors,
+      homeName: data?.species?.homeworld?.name,
+      terrains: data?.species?.homeworld?.terrains,
+      surfaceWater: data?.species?.homeworld?.surfaceWater,
+      rotationPeriod: data?.species?.homeworld?.rotationPeriod,
+      population: data?.species?.homeworld?.population,
     });
   }, [data]);
   if (loading) return <p>Loading...</p>;
@@ -192,96 +135,19 @@ export const PanelComponent: React.FunctionComponent<IMyProps> = ({
           justifyContent: "center",
         }}
       >
-        <DocumentCardTitle title={"Planet Details"} />
+        <DocumentCardTitle title={"Species Details"} />
       </DocumentCard>
       <form>
         <ControlledTextField
-          label="Name"
+          label="classification"
           control={control}
-          name="name"
+          name="classification"
           readOnly
         />
         <Stack horizontal>
           <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
             <span>
               {" "}
-              <ControlledTextField
-                label="Climates"
-                control={control}
-                name="climates"
-                readOnly
-              />
-            </span>
-          </Stack.Item>
-          <Stack.Item align="auto" style={{ flex: 1 }}>
-            <span>
-              {" "}
-              <ControlledTextField
-                label="Gravity"
-                control={control}
-                name="gravity"
-                readOnly
-              />
-            </span>
-          </Stack.Item>
-        </Stack>
-        <Stack horizontal>
-          <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
-            <span>
-              <ControlledTextField
-                label="Population"
-                control={control}
-                name="Population"
-                readOnly
-              />
-            </span>
-          </Stack.Item>
-          <Stack.Item align="auto" style={{ flex: 1 }}>
-            <span>
-              <ControlledTextField
-                label="Rotation Period"
-                control={control}
-                name="rotationPeriod"
-                readOnly
-              />
-            </span>
-          </Stack.Item>
-        </Stack>
-        <Stack horizontal>
-          <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
-            <span>
-              <ControlledTextField
-                label="Terrains"
-                control={control}
-                name="terrains"
-                readOnly
-              />
-            </span>
-          </Stack.Item>
-          <Stack.Item align="auto" style={{ flex: 1 }}>
-            <span>
-              <ControlledTextField
-                label="Surface Water"
-                control={control}
-                name="surfaceWater"
-                readOnly
-              />
-            </span>
-          </Stack.Item>
-        </Stack>
-        <Stack horizontal>
-          <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
-            <span>
-              <ControlledTextField
-                label="diameter"
-                control={control}
-                name="diameter"
-                readOnly
-              />
-            </span>
-          </Stack.Item>
-          <Stack.Item align="auto" style={{ flex: 1 }}>
-            <span>
               <ControlledTextField
                 label="created"
                 control={control}
@@ -290,14 +156,25 @@ export const PanelComponent: React.FunctionComponent<IMyProps> = ({
               />
             </span>
           </Stack.Item>
+          <Stack.Item align="auto" style={{ flex: 1 }}>
+            <span>
+              {" "}
+              <ControlledTextField
+                label="averageHeight"
+                control={control}
+                name="averageHeight"
+                readOnly
+              />
+            </span>
+          </Stack.Item>
         </Stack>
         <Stack horizontal>
           <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
             <span>
               <ControlledTextField
-                label="orbitalPeriod"
+                label="averageLifespan"
                 control={control}
-                name="orbitalPeriod"
+                name="averageLifespan"
                 readOnly
               />
             </span>
@@ -315,27 +192,64 @@ export const PanelComponent: React.FunctionComponent<IMyProps> = ({
         </Stack>
         <Label>Film Connection</Label>
         <DetailsList
-          items={data?.planet.filmConnection.films}
+          items={data?.species.filmConnection.films}
           columns={columns}
           selectionMode={SelectionMode.none}
           layoutMode={DetailsListLayoutMode.fixedColumns}
           constrainMode={ConstrainMode.unconstrained}
           isHeaderVisible={true}
         />
-        <Label>
-          Resident Connection 
-        </Label>
-        <Label>
-         Total Count -{data?.planet.residentConnection.totalCount}
-        </Label>
-        <DetailsList
-          items={data?.planet.residentConnection.residents}
-          columns={columnsResidents}
-          selectionMode={SelectionMode.none}
-          layoutMode={DetailsListLayoutMode.fixedColumns}
-          constrainMode={ConstrainMode.unconstrained}
-          isHeaderVisible={true}
+        <Label>Home World</Label>
+        <ControlledTextField
+          label="Name"
+          control={control}
+          name="homeName"
+          readOnly
         />
+        <Stack horizontal>
+          <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
+            <span>
+              <ControlledTextField
+                label="Population"
+                control={control}
+                name="population"
+                readOnly
+              />
+            </span>
+          </Stack.Item>
+          <Stack.Item align="auto" style={{ flex: 1 }}>
+            <span>
+              <ControlledTextField
+                label="terrains"
+                control={control}
+                name="terrains"
+                readOnly
+              />
+            </span>
+          </Stack.Item>
+        </Stack>
+        <Stack horizontal>
+          <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
+            <span>
+              <ControlledTextField
+                label="surfaceWater"
+                control={control}
+                name="surfaceWater"
+                readOnly
+              />
+            </span>
+          </Stack.Item>
+          <Stack.Item align="auto" style={{ flex: 1 }}>
+            <span>
+              <ControlledTextField
+                label="rotationPeriod"
+                control={control}
+                name="rotationPeriod"
+                readOnly
+              />
+            </span>
+          </Stack.Item>
+        </Stack>
       </form>
     </Panel>
   );

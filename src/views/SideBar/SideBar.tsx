@@ -1,4 +1,5 @@
-import { Nav, initializeIcons } from "@fluentui/react";
+import {useState} from "react";
+import { Nav, initializeIcons, INavLink } from "@fluentui/react";
 
 const navigationStyles = {
   root: {
@@ -27,13 +28,39 @@ const links = [
           },
         },
       },
+      {
+        name: "All Species",
+        key: "key2",
+        url: "/AllSpeciesListView",
+        iconProps: {
+          iconName: "News",
+          styles: {
+            root: {
+              fontSize: 20,
+              color: "#106ebe",
+            },
+          },
+        },
+      },
     ],
   },
 ];
 
 const SideBar = () => {
   initializeIcons();
-  return <Nav groups={links} selectedKey="key1" styles={navigationStyles} />;
+  const [selectedOption,setSelectedOption]=useState<string | undefined>();
+  return (
+    <Nav
+      groups={links}
+      selectedKey={selectedOption}
+      styles={navigationStyles}
+      onLinkClick={_onLinkClick}
+    />
+  );
+  function _onLinkClick(ev?: React.MouseEvent<HTMLElement>, item?: INavLink) {
+    setSelectedOption(item?.key);
+  }
 };
 
 export default SideBar;
+
