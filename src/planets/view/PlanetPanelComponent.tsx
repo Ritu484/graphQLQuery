@@ -1,18 +1,19 @@
 import React, { useEffect } from "react";
-import {
-  useParams,
-} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useQueryParam, StringParam } from "use-query-params";
 import { useForm } from "react-hook-form";
 import { Stack } from "@fluentui/react";
 import { Label } from "@fluentui/react/lib/Label";
 import { Panel, PanelType } from "@fluentui/react/lib/Panel";
+import { IExampleItem } from "@fluentui/example-data";
 import {
   DocumentCard,
   DocumentCardTitle,
 } from "@fluentui/react/lib/DocumentCard";
 import { useQuery } from "@apollo/client";
-import { Planet } from "../graphQL/Queries";
-import { ControlledTextField } from "./ControlledTextField";
+import { Planet } from "./query";
+import { columnsFilmConnection, columnsResidents } from "./columns.data";
+import { ControlledTextField } from "../../components/ControlledTextField";
 import {
   DetailsList,
   IColumn,
@@ -20,152 +21,31 @@ import {
   SelectionMode,
   ConstrainMode,
 } from "@fluentui/react/lib/DetailsList";
-interface IMyProps {
-  recordID: string;
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
 
-export const PanelComponent: React.FunctionComponent<IMyProps> = ({
-  recordID,
-  isOpen,
-  setIsOpen,
-}) => {
-   let { id } = useParams();
+
+const PlanetPanelComponent: React.FunctionComponent = () => {
+  const [id] = useQueryParam('id', StringParam);
+  let navigate = useNavigate();
   const { reset, control } = useForm();
-
-  // const [isOpen, setIsOpen] = React.useState(true);
   const { loading, error, data } = useQuery(Planet, {
-    variables: { id: recordID },
+    variables: { id: id },
   });
   //console.log(JSON.stringify(data?.planet.filmConnection.films));
-  let columns: IColumn[] = [
-    {
-      key: "episodeID",
-      name: "Episode ID",
-      minWidth: 50,
-      maxWidth: 200,
-      isResizable: true,
-      onRender: (item) => (
-        // eslint-disable-next-line react/jsx-no-bind
-        <div> {item.episodeID}</div>
-      ),
-    } as IColumn,
-    {
-      key: "edited",
-      name: "Edited",
-      minWidth: 50,
-      maxWidth: 200,
-      isResizable: true,
-      onRender: (item) => (
-        // eslint-disable-next-line react/jsx-no-bind
-        <div> {item.edited}</div>
-      ),
-    } as IColumn,
 
-    {
-      key: "director",
-      name: "director",
-      minWidth: 50,
-      maxWidth: 200,
-      isResizable: true,
-      onRender: (item) => (
-        // eslint-disable-next-line react/jsx-no-bind
-        <div> {item.director}</div>
-      ),
-    } as IColumn,
-    {
-      key: "producers",
-      name: "producers",
-      minWidth: 50,
-      maxWidth: 200,
-      isResizable: true,
-      onRender: (item) => (
-        // eslint-disable-next-line react/jsx-no-bind
-        <div> {item.director}</div>
-      ),
-    } as IColumn,
-    {
-      key: "releaseDate",
-      name: "releaseDate",
-      minWidth: 50,
-      maxWidth: 200,
-      isResizable: true,
-      onRender: (item) => (
-        // eslint-disable-next-line react/jsx-no-bind
-        <div> {item.releaseDate}</div>
-      ),
-    } as IColumn,
-  ];
   //columnsResidents
-  let columnsResidents: IColumn[] = [
-    {
-      key: "edited",
-      name: "edited",
-      minWidth: 50,
-      maxWidth: 200,
-      isResizable: true,
-      onRender: (item) => (
-        // eslint-disable-next-line react/jsx-no-bind
-        <div> {item.edited}</div>
-      ),
-    } as IColumn,
-    {
-      key: "created",
-      name: "created",
-      minWidth: 50,
-      maxWidth: 200,
-      isResizable: true,
-      onRender: (item) => (
-        // eslint-disable-next-line react/jsx-no-bind
-        <div> {item.created}</div>
-      ),
-    } as IColumn,
-    {
-      key: "birthYear",
-      name: "birthYear",
-      minWidth: 50,
-      maxWidth: 200,
-      isResizable: true,
-      onRender: (item) => (
-        // eslint-disable-next-line react/jsx-no-bind
-        <div> {item.birthYear}</div>
-      ),
-    } as IColumn,
-    {
-      key: "height",
-      name: "height",
-      minWidth: 50,
-      maxWidth: 200,
-      isResizable: true,
-      onRender: (item) => (
-        // eslint-disable-next-line react/jsx-no-bind
-        <div> {item.height}</div>
-      ),
-    } as IColumn,
-    {
-      key: "mass",
-      name: "mass",
-      minWidth: 50,
-      maxWidth: 200,
-      isResizable: true,
-      onRender: (item) => (
-        // eslint-disable-next-line react/jsx-no-bind
-        <div> {item.mass}</div>
-      ),
-    } as IColumn,
-    {
-      key: "name",
-      name: "name",
-      minWidth: 50,
-      maxWidth: 200,
-      isResizable: true,
-      onRender: (item) => (
-        // eslint-disable-next-line react/jsx-no-bind
-        <div> {item.name}</div>
-      ),
-    } as IColumn,
-  ];
+
+  function renderItemColumn(
+    item: IExampleItem,
+    index: number | undefined,
+    column: IColumn | undefined
+  ) {
+    const fieldContent = item[column?.key as keyof IExampleItem] as string;
+
+    switch (column?.key) {
+      default:
+        return <span>{fieldContent}</span>;
+    }
+  }
   useEffect(() => {
     reset({
       name: data?.planet.name,
@@ -181,8 +61,10 @@ export const PanelComponent: React.FunctionComponent<IMyProps> = ({
     <Panel
       type={PanelType.large}
       // customWidth="800px"
-      isOpen={isOpen}
-      onDismiss={() => setIsOpen(false)}
+      isOpen={true}
+      onDismiss={() => {
+        navigate("/planets");
+      }}
       closeButtonAriaLabel="Close"
     >
       <DocumentCard
@@ -273,7 +155,7 @@ export const PanelComponent: React.FunctionComponent<IMyProps> = ({
           <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
             <span>
               <ControlledTextField
-                label="diameter"
+                label="Diameter"
                 control={control}
                 name="diameter"
                 readOnly
@@ -283,7 +165,7 @@ export const PanelComponent: React.FunctionComponent<IMyProps> = ({
           <Stack.Item align="auto" style={{ flex: 1 }}>
             <span>
               <ControlledTextField
-                label="created"
+                label="Created"
                 control={control}
                 name="created"
                 readOnly
@@ -295,7 +177,7 @@ export const PanelComponent: React.FunctionComponent<IMyProps> = ({
           <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
             <span>
               <ControlledTextField
-                label="orbitalPeriod"
+                label="Orbital Period"
                 control={control}
                 name="orbitalPeriod"
                 readOnly
@@ -305,7 +187,7 @@ export const PanelComponent: React.FunctionComponent<IMyProps> = ({
           <Stack.Item align="auto" style={{ flex: 1 }}>
             <span>
               <ControlledTextField
-                label="edited"
+                label="Edited"
                 control={control}
                 name="edited"
                 readOnly
@@ -316,21 +198,19 @@ export const PanelComponent: React.FunctionComponent<IMyProps> = ({
         <Label>Film Connection</Label>
         <DetailsList
           items={data?.planet.filmConnection.films}
-          columns={columns}
+          columns={columnsFilmConnection}
+          onRenderItemColumn={renderItemColumn}
           selectionMode={SelectionMode.none}
           layoutMode={DetailsListLayoutMode.fixedColumns}
           constrainMode={ConstrainMode.unconstrained}
           isHeaderVisible={true}
         />
-        <Label>
-          Resident Connection 
-        </Label>
-        <Label>
-         Total Count -{data?.planet.residentConnection.totalCount}
-        </Label>
+        <Label>Resident Connection</Label>
+        <Label>Total Count -{data?.planet.residentConnection.totalCount}</Label>
         <DetailsList
           items={data?.planet.residentConnection.residents}
           columns={columnsResidents}
+          onRenderItemColumn={renderItemColumn}
           selectionMode={SelectionMode.none}
           layoutMode={DetailsListLayoutMode.fixedColumns}
           constrainMode={ConstrainMode.unconstrained}
@@ -340,3 +220,4 @@ export const PanelComponent: React.FunctionComponent<IMyProps> = ({
     </Panel>
   );
 };
+export default PlanetPanelComponent;

@@ -1,4 +1,4 @@
-import {useState} from "react";
+import { useState } from "react";
 import { Nav, initializeIcons, INavLink } from "@fluentui/react";
 
 const navigationStyles = {
@@ -15,11 +15,11 @@ const links = [
   {
     links: [
       {
-        name: "All Planets",
+        name: "Planets",
         key: "key1",
-        url: "/AllPlanetListView",
+        url: "/planets",
         iconProps: {
-          iconName: "News",
+          iconName: "FavoriteStarFill",
           styles: {
             root: {
               fontSize: 20,
@@ -29,11 +29,11 @@ const links = [
         },
       },
       {
-        name: "All Species",
+        name: "Species",
         key: "key2",
-        url: "/AllSpeciesListView",
+        url: "/species",
         iconProps: {
-          iconName: "News",
+          iconName: "FavoriteStarFill",
           styles: {
             root: {
               fontSize: 20,
@@ -48,7 +48,7 @@ const links = [
 
 const SideBar = () => {
   initializeIcons();
-  const [selectedOption,setSelectedOption]=useState<string | undefined>();
+  const [selectedOption, setSelectedOption] = useState<string | undefined>();
   return (
     <Nav
       groups={links}
@@ -63,4 +63,3 @@ const SideBar = () => {
 };
 
 export default SideBar;
-
