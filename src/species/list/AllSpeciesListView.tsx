@@ -1,5 +1,6 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Outlet } from "react-router-dom";
 import { useQuery } from "@apollo/client";
+import { Link } from "@fluentui/react/lib/Link";
 import {
   DetailsList,
   DetailsListLayoutMode,
@@ -8,10 +9,10 @@ import {
   IColumn,
 } from "@fluentui/react/lib/DetailsList";
 import { ISpecies } from "./types";
-import { Link } from "@fluentui/react/lib/Link";
 import { columnsAllSpecies } from "./columns.data";
 import { AllSpecies } from "./query";
-import { Outlet } from "react-router-dom";
+import ColoredEyeComponent from "./ColoredEyeComponent";
+import { Stack } from "@fluentui/react";
 
 const AllPlanetListView: React.FunctionComponent = () => {
   let navigate = useNavigate();
@@ -36,11 +37,18 @@ const AllPlanetListView: React.FunctionComponent = () => {
         );
       case "eyeColors":
         return (
-          <div>
+          <Stack horizontal tokens={{ childrenGap: 10 }}>
             {item.eyeColors.map((value: string, index: number) =>
-              index < item.eyeColors.length - 1 ? value + "," : value
+              // index < item.eyeColors.length - 1 ? value + "," : value
+              {
+                return (
+                  <Stack>
+                    <ColoredEyeComponent color={value} />
+                  </Stack>
+                );
+              }
             )}
-          </div>
+          </Stack>
         );
       default:
         return <span>{fieldContent}</span>;
@@ -48,8 +56,7 @@ const AllPlanetListView: React.FunctionComponent = () => {
   }
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;
-
-  return (
+return (
     <div style={{ display: "flex" }}>
       <DetailsList
         items={data.allSpecies.species}

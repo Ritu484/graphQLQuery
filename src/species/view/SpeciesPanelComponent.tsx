@@ -1,19 +1,15 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useQueryParam, StringParam } from "use-query-params";
 import { useForm } from "react-hook-form";
+import { useQueryParam, StringParam } from "use-query-params";
 import { Stack } from "@fluentui/react";
 import { Label } from "@fluentui/react/lib/Label";
 import { Panel, PanelType } from "@fluentui/react/lib/Panel";
-import { IExampleItem } from "@fluentui/example-data";
+import { SpeciesView } from './types';
 import {
   DocumentCard,
   DocumentCardTitle,
 } from "@fluentui/react/lib/DocumentCard";
-import { useQuery } from "@apollo/client";
-import { Species } from "./query";
-import { columnsSpeciesDetailView } from "./columns.data";
-import { ControlledTextField } from "../../components/ControlledTextField";
 import {
   DetailsList,
   IColumn,
@@ -21,6 +17,11 @@ import {
   SelectionMode,
   ConstrainMode,
 } from "@fluentui/react/lib/DetailsList";
+import { useQuery } from "@apollo/client";
+import { Species } from "./query";
+import { columnsSpeciesDetailView } from "./columns.data";
+import { ControlledTextField } from "../../components/ControlledTextField";
+
 
 const PlanetPanelComponent: React.FunctionComponent = () => {
 
@@ -32,11 +33,11 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
   });
   
   function renderItemColumn(
-    item: IExampleItem,
+    item: SpeciesView,
     index: number | undefined,
     column: IColumn | undefined
   ) {
-    const fieldContent = item[column?.key as keyof IExampleItem] as string;
+    const fieldContent = item[column?.key as keyof SpeciesView] as string;
 
     switch (column?.key) {
       default:

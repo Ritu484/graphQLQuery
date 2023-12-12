@@ -1,4 +1,5 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Outlet } from "react-router-dom";
+import { Link } from "@fluentui/react/lib/Link";
 import { useQuery } from "@apollo/client";
 import {
   DetailsList,
@@ -7,15 +8,17 @@ import {
   ConstrainMode,
   IColumn,
 } from "@fluentui/react/lib/DetailsList";
+import { ProgressIndicator } from "@fluentui/react/lib/ProgressIndicator";
+
 import { IPlanet } from "./types";
-import { Link } from "@fluentui/react/lib/Link";
 import { columns } from "./columns.data";
 import { AllPlanets } from "./query";
-import { Outlet } from "react-router-dom";
+import { Stack } from "@fluentui/react";
+import { useStyles } from "./index.styles";
 
 const AllPlanetListView: React.FunctionComponent = () => {
+  const styles = useStyles();
 
- 
   let navigate = useNavigate();
   const { loading, error, data } = useQuery(AllPlanets);
   function renderItemColumn(
@@ -24,7 +27,6 @@ const AllPlanetListView: React.FunctionComponent = () => {
     column: IColumn | undefined
   ) {
     const fieldContent = item[column?.fieldName as keyof IPlanet] as string;
-
     switch (column?.key) {
       case "name":
         return (
@@ -46,32 +48,34 @@ const AllPlanetListView: React.FunctionComponent = () => {
         );
       case "terrains":
         return (
-          <div>
+          <Stack>
             {item.terrains.map((value: string, index: number) =>
               index < item.terrains.length - 1 ? value + "," : value
             )}
-          </div>
+          </Stack>
         );
       default:
         return <span>{fieldContent}</span>;
     }
   }
-  if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;
-
   return (
-    <div style={{ display: "flex" }}>
-      <DetailsList
-        items={data.allPlanets.planets}
-        columns={columns}
-        onRenderItemColumn={renderItemColumn}
-        selectionMode={SelectionMode.none}
-        layoutMode={DetailsListLayoutMode.fixedColumns}
-        constrainMode={ConstrainMode.unconstrained}
-        isHeaderVisible={true}
-      />
+    <Stack >
+      {loading ? (
+        <ProgressIndicator description="Loading data" />
+      ) : (
+        <DetailsList
+          items={data.allPlanets.planets}
+          columns={columns}
+          onRenderItemColumn={renderItemColumn}
+          selectionMode={SelectionMode.none}
+          layoutMode={DetailsListLayoutMode.fixedColumns}
+          constrainMode={ConstrainMode.unconstrained}
+          isHeaderVisible={true}
+        />
+      )}
       <Outlet />
-    </div>
+    </Stack>
   );
 };
 export default AllPlanetListView;

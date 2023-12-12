@@ -5,19 +5,7 @@ export const columns: IColumn[] = [
     name: "Name",
     fieldName: "name",
     isResizable: true,
-    minWidth: 100,
-    // onRender: (item) => (
-    //   // eslint-disable-next-line react/jsx-no-bind
-    //   <Link
-    //     key={item.id}
-    //     onClick={() => {
-    //       setRecordID(item.id);
-    //       setIsOpen(true);
-    //     }}
-    //   >
-    //     {item.name}
-    //   </Link>
-    // ),
+    minWidth: 50,
   } as IColumn,
   {
     key: "climates",
@@ -26,15 +14,6 @@ export const columns: IColumn[] = [
     minWidth: 50,
     maxWidth: 200,
     isResizable: true,
-    // onRender: (item) => (
-    //   // eslint-disable-next-line react/jsx-no-bind
-
-    //   <div style={{ whiteSpace: "pre-wrap" }}>
-    //     {item.climates.map((value: string, index: number) =>
-    //       index < item.climates.length - 1 ? value + "," : value
-    //     )}
-    //   </div>
-    // ),
   } as IColumn,
   {
     key: "gravity",
@@ -42,10 +21,6 @@ export const columns: IColumn[] = [
     minWidth: 50,
     maxWidth: 200,
     isResizable: true,
-    // onRender: (item) => (
-    //   // eslint-disable-next-line react/jsx-no-bind
-    //   <div> {item.gravity}</div>
-    // ),
   } as IColumn,
   {
     key: "population",
@@ -54,10 +29,6 @@ export const columns: IColumn[] = [
     minWidth: 50,
     maxWidth: 200,
     isResizable: true,
-    // onRender: (item) => (
-    //   // eslint-disable-next-line react/jsx-no-bind
-    //   <div> {item.population}</div>
-    // ),
   } as IColumn,
   {
     key: "rotationPeriod",
@@ -66,10 +37,6 @@ export const columns: IColumn[] = [
     minWidth: 50,
     maxWidth: 200,
     isResizable: true,
-    // onRender: (item) => (
-    //   // eslint-disable-next-line react/jsx-no-bind
-    //   <div> {item.rotationPeriod}</div>
-    // ),
   } as IColumn,
   {
     key: "terrains",
@@ -78,14 +45,6 @@ export const columns: IColumn[] = [
     minWidth: 50,
     maxWidth: 200,
     isResizable: true,
-    // onRender: (item) => (
-    //   // eslint-disable-next-line react/jsx-no-bind
-    //   <div style={{ whiteSpace: "pre-wrap" }}>
-    //     {item.terrains.map((value: string, index: number) =>
-    //       index < item.terrains.length - 1 ? value + "," : value
-    //     )}
-    //   </div>
-    // ),
   } as IColumn,
   {
     key: "surfaceWater",
@@ -94,9 +53,6 @@ export const columns: IColumn[] = [
     minWidth: 50,
     maxWidth: 200,
     isResizable: true,
-    // onRender: (item) => (
-    //   // eslint-disable-next-line react/jsx-no-bind
-    //   <div> {item.surfaceWater}</div>
-    // ),
   } as IColumn,
+  
 ];
