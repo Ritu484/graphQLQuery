@@ -6,6 +6,7 @@ export const columns: IColumn[] = [
     fieldName: "name",
     isResizable: true,
     minWidth: 50,
+    maxWidth: 200,
   } as IColumn,
   {
     key: "climates",
@@ -54,5 +55,4 @@ export const columns: IColumn[] = [
     maxWidth: 200,
     isResizable: true,
   } as IColumn,
-  
 ];

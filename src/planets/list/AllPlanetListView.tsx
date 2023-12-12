@@ -60,9 +60,11 @@ const AllPlanetListView: React.FunctionComponent = () => {
   }
   if (error) return <p>Error : {error.message}</p>;
   return (
-    <Stack >
+    <Stack>
       {loading ? (
+         <Stack className={styles.centeredContainer}>
         <ProgressIndicator description="Loading data" />
+        </Stack>
       ) : (
         <DetailsList
           items={data.allPlanets.planets}
