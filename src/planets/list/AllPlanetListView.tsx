@@ -1,5 +1,4 @@
-import { useNavigate, Outlet } from "react-router-dom";
-import { Link } from "@fluentui/react/lib/Link";
+import {Outlet } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import {
   DetailsList,
@@ -8,34 +7,32 @@ import {
   ConstrainMode,
   IColumn,
 } from "@fluentui/react/lib/DetailsList";
-import { ProgressIndicator } from "@fluentui/react/lib/ProgressIndicator";
 import { IPlanet } from "./types";
 import { columns } from "./columns.data";
 import { AllPlanets } from "./query";
+import { Panel, PanelType } from "@fluentui/react/lib/Panel";
 import { Stack } from "@fluentui/react";
-import { useStyles } from "./index.styles";
 import { ColumnsDisplay } from "./ColumnsDisplay";
+import LoadingScreen from "../../components/LoadingScreen";
 
 const AllPlanetListView: React.FunctionComponent = () => {
-  const styles = useStyles();
-  let navigate = useNavigate();
   const { loading, error, data } = useQuery(AllPlanets);
   function renderItemColumn(
     item: IPlanet,
     index: number | undefined,
     column: IColumn | undefined
   ) {
-   
-    return(<ColumnsDisplay item={item} columnKey={column?.key}/>);
-    
+    return <ColumnsDisplay item={item} columnKey={column?.key} />;
   }
-  if (error) return <p>Error : {error.message}</p>;
+  if (error) return (
+    <Panel type={PanelType.large} isBlocking={false}>
+      <p>Error : {error.message}</p>
+    </Panel>
+  );
   return (
-    <Stack>
+    <Stack >
       {loading ? (
-        <Stack className={styles.centeredContainer}>
-          <ProgressIndicator description="Loading data" />
-        </Stack>
+        <LoadingScreen />
       ) : (
         <DetailsList
           items={data.allPlanets.planets}

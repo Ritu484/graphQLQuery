@@ -6,6 +6,7 @@ export const Species = gql`
       averageLifespan
       classification
       created
+      edited
       eyeColors
       filmConnection {
         films {

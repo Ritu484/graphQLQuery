@@ -1,5 +1,6 @@
 import { Controller } from "react-hook-form";
 import { TextField } from "@fluentui/react/lib/TextField";
+import { formatDate } from "../utility";
 
 export const ControlledTextField = (
   props:any
@@ -17,7 +18,7 @@ export const ControlledTextField = (
         <TextField
           {...props}
           onChange={onChange}
-          value={value}
+          value={props.converToDate ? formatDate(value) : value}
           onBlur={onBlur}
           name={fieldName}
           errorMessage={error && error.message}

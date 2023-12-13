@@ -1,15 +1,7 @@
 import { useState } from "react";
 import { Nav, initializeIcons, INavLink } from "@fluentui/react";
 import { Image, IImageProps, ImageFit } from "@fluentui/react/lib/Image";
-import {
-  IPersonaSharedProps,
-  Persona,
-  PersonaSize,
-  PersonaPresence,
-} from "@fluentui/react/lib/Persona";
-import { Stack, IStackStyles, IStackTokens } from "@fluentui/react/lib/Stack";
-import { TestImages } from "@fluentui/example-data";
-import { Label } from "@fluentui/react/lib/Label";
+import { Stack } from "@fluentui/react/lib/Stack";
 import starWars from "../assets/star-wars.svg";
 
 const imageProps: IImageProps = {

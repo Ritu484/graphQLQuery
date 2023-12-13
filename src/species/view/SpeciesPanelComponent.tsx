@@ -1,15 +1,10 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+
 import { useForm } from "react-hook-form";
 import { useQueryParam, StringParam } from "use-query-params";
 import { Stack } from "@fluentui/react";
 import { Label } from "@fluentui/react/lib/Label";
 import { Panel, PanelType } from "@fluentui/react/lib/Panel";
-import { SpeciesView } from './types';
-import {
-  DocumentCard,
-  DocumentCardTitle,
-} from "@fluentui/react/lib/DocumentCard";
 import {
   DetailsList,
   IColumn,
@@ -18,20 +13,25 @@ import {
   ConstrainMode,
 } from "@fluentui/react/lib/DetailsList";
 import { useQuery } from "@apollo/client";
+
+import { SpeciesView } from "./types";
 import { Species } from "./query";
 import { columnsSpeciesDetailView } from "./columns.data";
 import { ControlledTextField } from "../../components/ControlledTextField";
-
+import CustomPanelHeader from "../../components/CustomPanelHeader";
+import LoadingScreen from "../../components/LoadingScreen";
 
 const PlanetPanelComponent: React.FunctionComponent = () => {
-
   const [speciesId] = useQueryParam("speciesId", StringParam);
-  let navigate = useNavigate();
   const { reset, control } = useForm();
   const { loading, error, data } = useQuery(Species, {
     variables: { speciesId: speciesId },
   });
-  
+
+  const onRenderCustomHeader = () => {
+    return <CustomPanelHeader title="Species Details" navigateTo="/species" />;
+  };
+
   function renderItemColumn(
     item: SpeciesView,
     index: number | undefined,
@@ -44,43 +44,43 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
         return <span>{fieldContent}</span>;
     }
   }
-   useEffect(() => {
-     reset({
-       classification: data?.species.classification,
-       created: data?.species.created,
-       averageHeight: data?.species.averageHeight,
-       averageLifespan: data?.species.averageLifespan,
-       designation: data?.species.designation,
-       hairColors: data?.species.hairColors,
-       homeName: data?.species?.homeworld?.name,
-       terrains: data?.species?.homeworld?.terrains,
-       surfaceWater: data?.species?.homeworld?.surfaceWater,
-       rotationPeriod: data?.species?.homeworld?.rotationPeriod,
-       population: data?.species?.homeworld?.population,
-     });
-   }, [data]);
-   if (loading) return <p>Loading...</p>;
-   if (error) return <p>Error : {error.message}</p>;
+  useEffect(() => {
+    reset({
+      classification: data?.species.classification,
+      created: data?.species.created,
+      edited: data?.species.edited,
+      averageHeight: data?.species.averageHeight,
+      averageLifespan: data?.species.averageLifespan,
+      designation: data?.species.designation,
+      hairColors: data?.species.hairColors,
+      homeName: data?.species?.homeworld?.name,
+      terrains: data?.species?.homeworld?.terrains,
+      surfaceWater: data?.species?.homeworld?.surfaceWater,
+      rotationPeriod: data?.species?.homeworld?.rotationPeriod,
+      population: data?.species?.homeworld?.population,
+    });
+  }, [data]);
+    if (loading)
+      return (
+        <Panel type={PanelType.large} isBlocking={false}>
+          <LoadingScreen />
+        </Panel>
+      );
+    if (error)
+      return (
+        <Panel type={PanelType.large} isBlocking={false}>
+          <p>Error : {error.message}</p>
+        </Panel>
+      );
 
-    return (
+  return (
     <Panel
+      onRenderHeader={onRenderCustomHeader}
       type={PanelType.large}
       isOpen={true}
-      onDismiss={() => {
-        // setIsOpen(false);
-        navigate("/species");
-      }}
-      closeButtonAriaLabel="Close"
+      hasCloseButton={false}
+      isBlocking={false}
     >
-      <DocumentCard
-        style={{
-          display: "flex",
-          minWidth: "100%",
-          justifyContent: "center",
-        }}
-      >
-        <DocumentCardTitle title={"Species Details"} />
-      </DocumentCard>
       <form>
         <ControlledTextField
           label="Classification"
@@ -91,11 +91,11 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
         <Stack horizontal>
           <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
             <span>
-              {" "}
               <ControlledTextField
                 label="Created"
                 control={control}
                 name="created"
+                converToDate={true}
                 readOnly
               />
             </span>
@@ -129,6 +129,7 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
                 label="Edited"
                 control={control}
                 name="edited"
+                converToDate={true}
                 readOnly
               />
             </span>
@@ -197,7 +198,6 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
         </Stack>
       </form>
     </Panel>
-  
   );
 };
 export default PlanetPanelComponent;

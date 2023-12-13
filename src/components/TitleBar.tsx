@@ -2,7 +2,6 @@ import {
   IPersonaSharedProps,
   Persona,
   PersonaSize,
-  PersonaPresence,
 } from "@fluentui/react/lib/Persona";
 import { Stack, IStackStyles, IStackTokens } from "@fluentui/react/lib/Stack";
 

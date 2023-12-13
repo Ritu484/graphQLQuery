@@ -1,14 +1,14 @@
 import { IconButton } from "@fluentui/react";
 import { Stack } from "@fluentui/react";
-import { FontSizes, makeStyles } from "@fluentui/react";
+import { makeStyles } from "@fluentui/react";
 import { useNavigate } from "react-router-dom";
 
-type Props={
-title:string,
-navigateTo:string
-}
+type Props = {
+  title: string;
+  navigateTo: string;
+};
 
- const CustomPanelHeader = (props:Props) => {
+const CustomPanelHeader = (props: Props) => {
   const useStyles = makeStyles((theme) => ({
     headerContainer: {
       display: "flex",
@@ -16,12 +16,13 @@ navigateTo:string
       marginBottom: 24,
       height: "50px",
       alignItems: "center",
+      justifyContent: "center",
       boxShadow: "0px 5px 5px 0px rgba(0, 0, 0, 0.1)",
       fontSize: 18,
     },
   }));
   let navigate = useNavigate();
-  const{title,navigateTo}=props
+  const { title, navigateTo } = props;
   const styles = useStyles();
   const iconProps = { iconName: "ChromeClose" };
   const handleCloseClick = () => {
@@ -32,13 +33,12 @@ navigateTo:string
       <Stack
         style={{
           display: "flex",
-          alignItems: "left",
           fontWeight: 600,
           paddingLeft: 20,
           width: "100%",
         }}
       >
-      {title}
+        {title}
       </Stack>
       <Stack
         style={{
@@ -53,5 +53,3 @@ navigateTo:string
   );
 };
 export default CustomPanelHeader;
-
-

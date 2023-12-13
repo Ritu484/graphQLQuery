@@ -13,14 +13,6 @@ export const columnsSpeciesDetailView: IColumn[] = [
     minWidth: 50,
     maxWidth: 200,
     isResizable: true,
-    // onRender: (item) => (
-    //   // eslint-disable-next-line react/jsx-no-bind
-    //   <div style={{ whiteSpace: "pre-wrap" }}>
-    //     {item.producers.map((value: string, index: number) =>
-    //       index < item.producers.length - 1 ? value + "," : value
-    //     )}
-    //   </div>
-    // ),
   } as IColumn,
   {
     key: "releaseDate",
@@ -43,4 +35,5 @@ export const columnsSpeciesDetailView: IColumn[] = [
     maxWidth: 200,
     isResizable: true,
   } as IColumn,
+ 
 ];

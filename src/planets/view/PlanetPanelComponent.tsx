@@ -5,7 +5,6 @@ import { useQueryParam, StringParam } from "use-query-params";
 import { Stack } from "@fluentui/react";
 import { Label } from "@fluentui/react/lib/Label";
 import { Panel, PanelType } from "@fluentui/react/lib/Panel";
-import { IconButton } from "@fluentui/react";
 import {
   DetailsList,
   IColumn,
@@ -21,6 +20,7 @@ import { columnsFilmConnection, columnsResidents } from "./columns.data";
 import { ControlledTextField } from "../../components/ControlledTextField";
 import { useStyles } from "./index.styles";
 import CustomPanelHeader from "../../components/CustomPanelHeader";
+import LoadingScreen from "../../components/LoadingScreen";
 
 const PlanetPanelComponent: React.FunctionComponent = () => {
   const [id] = useQueryParam("id", StringParam);
@@ -57,8 +57,16 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
       rotationPeriod: data?.planet.rotationPeriod,
     });
   }, [data]);
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error : {error.message}</p>;
+  if (loading) return (
+    <Panel type={PanelType.large} isBlocking={false}>
+      <LoadingScreen />
+    </Panel>
+  );
+  if (error) return (
+    <Panel type={PanelType.large} isBlocking={false}>
+      <p>Error : {error.message}</p>
+    </Panel>
+  );
   return (
     <Panel
       onRenderHeader={onRenderCustomHeader}
