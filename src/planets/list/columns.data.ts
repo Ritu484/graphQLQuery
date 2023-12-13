@@ -19,6 +19,7 @@ export const columns: IColumn[] = [
   {
     key: "gravity",
     name: "Gravity",
+    fieldName: "gravity",
     minWidth: 50,
     maxWidth: 200,
     isResizable: true,
@@ -36,7 +37,7 @@ export const columns: IColumn[] = [
     name: "Rotation Period",
     fieldName: "rotationPeriod",
     minWidth: 50,
-    maxWidth: 200,
+    maxWidth: 100,
     isResizable: true,
   } as IColumn,
   {
@@ -46,13 +47,14 @@ export const columns: IColumn[] = [
     minWidth: 50,
     maxWidth: 200,
     isResizable: true,
+    isMultiLine:true
   } as IColumn,
   {
     key: "surfaceWater",
     name: "Surface Water",
     fieldName: "surfaceWater",
     minWidth: 50,
-    maxWidth: 200,
+    maxWidth: 100,
     isResizable: true,
   } as IColumn,
 ];

@@ -1,5 +1,5 @@
 import { FontIcon } from "@fluentui/react/lib/Icon";
-import { mergeStyles, mergeStyleSets } from "@fluentui/react/lib/Styling";
+import { mergeStyles } from "@fluentui/react/lib/Styling";
 
 const ColoredEyeComponent = (props: any) => {
   const iconClass = mergeStyles({
@@ -7,15 +7,13 @@ const ColoredEyeComponent = (props: any) => {
     color: props.color,
   });
   return (
-    <div>
-      <FontIcon
-        aria-label="Compass"
-        // color="deepskyblue"
-        iconName="FullCircleMask"
-        //  color={props.color}
-        className={iconClass}
-      />
-    </div>
+    <FontIcon
+      aria-label="FullCircleMask"
+      // color="deepskyblue"
+      iconName="FullCircleMask"
+      //  color={props.color}
+      className={iconClass}
+    />
   );
 };
 

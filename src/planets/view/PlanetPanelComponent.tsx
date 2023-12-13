@@ -5,11 +5,7 @@ import { useQueryParam, StringParam } from "use-query-params";
 import { Stack } from "@fluentui/react";
 import { Label } from "@fluentui/react/lib/Label";
 import { Panel, PanelType } from "@fluentui/react/lib/Panel";
-import { PlanetView } from "./types";
-import {
-  DocumentCard,
-  DocumentCardTitle,
-} from "@fluentui/react/lib/DocumentCard";
+import { IconButton } from "@fluentui/react";
 import {
   DetailsList,
   IColumn,
@@ -18,21 +14,27 @@ import {
   ConstrainMode,
 } from "@fluentui/react/lib/DetailsList";
 import { useQuery } from "@apollo/client";
+
 import { Planet } from "./query";
+import { PlanetView } from "./types";
 import { columnsFilmConnection, columnsResidents } from "./columns.data";
 import { ControlledTextField } from "../../components/ControlledTextField";
-
+import { useStyles } from "./index.styles";
+import CustomPanelHeader from "../../components/CustomPanelHeader";
 
 const PlanetPanelComponent: React.FunctionComponent = () => {
-  const [id] = useQueryParam('id', StringParam);
+  const [id] = useQueryParam("id", StringParam);
+
+  const styles = useStyles();
   let navigate = useNavigate();
   const { reset, control } = useForm();
   const { loading, error, data } = useQuery(Planet, {
     variables: { id: id },
   });
-  //console.log(JSON.stringify(data?.planet.filmConnection.films));
 
-  //columnsResidents
+  const onRenderCustomHeader = () => {
+    return <CustomPanelHeader title="Planet Details" navigateTo="/planets" />;
+  };
 
   function renderItemColumn(
     item: PlanetView,
@@ -59,23 +61,12 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
   if (error) return <p>Error : {error.message}</p>;
   return (
     <Panel
+      onRenderHeader={onRenderCustomHeader}
       type={PanelType.large}
-      // customWidth="800px"
       isOpen={true}
-      onDismiss={() => {
-        navigate("/planets");
-      }}
-      closeButtonAriaLabel="Close"
+      hasCloseButton={false}
+      isBlocking={false}
     >
-      <DocumentCard
-        style={{
-          display: "flex",
-          minWidth: "100%",
-          justifyContent: "center",
-        }}
-      >
-        <DocumentCardTitle title={"Planet Details"} />
-      </DocumentCard>
       <form>
         <ControlledTextField
           label="Name"

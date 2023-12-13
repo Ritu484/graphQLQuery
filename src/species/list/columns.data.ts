@@ -15,15 +15,6 @@ export const columnsAllSpecies: IColumn[] = [
     minWidth: 50,
     maxWidth: 200,
     isResizable: true,
-    //  onRender: (item) => (
-    //    // eslint-disable-next-line react/jsx-no-bind
-
-    //    <div style={{ whiteSpace: "pre-wrap" }}>
-    //      {item.eyeColors.map((value: string, index: number) =>
-    //        index < item.eyeColors.length - 1 ? value + "," : value
-    //      )}
-    //    </div>
-    //  ),
   } as IColumn,
   {
     key: "created",
@@ -59,7 +50,7 @@ export const columnsAllSpecies: IColumn[] = [
   } as IColumn,
   {
     key: "averageHeight",
-    name: "averageHeight",
+    name: "Average Height",
     fieldName: "averageHeight",
     minWidth: 50,
     maxWidth: 200,
