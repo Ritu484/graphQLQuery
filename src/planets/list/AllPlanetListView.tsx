@@ -1,4 +1,4 @@
-import {Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import {
   DetailsList,
@@ -6,6 +6,8 @@ import {
   SelectionMode,
   ConstrainMode,
   IColumn,
+  IDetailsHeaderProps,
+  DetailsHeader,
 } from "@fluentui/react/lib/DetailsList";
 import { IPlanet } from "./types";
 import { columns } from "./columns.data";
@@ -17,6 +19,7 @@ import LoadingScreen from "../../components/LoadingScreen";
 
 const AllPlanetListView: React.FunctionComponent = () => {
   const { loading, error, data } = useQuery(AllPlanets);
+
   function renderItemColumn(
     item: IPlanet,
     index: number | undefined,
@@ -24,13 +27,15 @@ const AllPlanetListView: React.FunctionComponent = () => {
   ) {
     return <ColumnsDisplay item={item} columnKey={column?.key} />;
   }
-  if (error) return (
-    <Panel type={PanelType.large} isBlocking={false}>
-      <p>Error : {error.message}</p>
-    </Panel>
-  );
+
+  if (error)
+    return (
+      <Panel type={PanelType.large} isBlocking={false}>
+        <p>Error : {error.message}</p>
+      </Panel>
+    );
   return (
-    <Stack >
+    <Stack>
       {loading ? (
         <LoadingScreen />
       ) : (

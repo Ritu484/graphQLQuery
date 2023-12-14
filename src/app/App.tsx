@@ -36,7 +36,7 @@ function App() {
       <Stack.Item className={styles.titleBarContainer}>
         <TitleBar />
       </Stack.Item>
-      <Stack horizontal style={{ position: "absolute", top: 0, left: 0 }}>
+      <Stack horizontal style={{ position: "absolute", top: 0, left: 0}}>
         <Stack.Item className={styles.sideBarContainer}>
           <SideBar />
         </Stack.Item>

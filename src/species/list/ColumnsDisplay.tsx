@@ -40,15 +40,12 @@ export const ColumnsDisplay = (props: Props) => {
           )}
         </Stack>
       );
-
     case "created":
     case "edited":
-      return (
-        <span>
-          {formatDate(fieldContent)}
-        </span>
-      );
-      
+      return <span>{formatDate(fieldContent)}</span>;
+    case "averageLifespan":
+    case "averageHeight":
+      return <Stack style={{ alignItems: "center" }}>{fieldContent}</Stack>;
     default:
       return <span>{fieldContent}</span>;
   }

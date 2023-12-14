@@ -1,5 +1,6 @@
 import { format, parseISO } from "date-fns";
 
 export const formatDate = (date: string) => {
-  return format(parseISO(date), `yyyy/MM/dd HH:mm:ss`).toString();
+ // return date
+  return format(parseISO(date), `yyyy/MM/dd`).toString();
 };

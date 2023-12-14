@@ -21,6 +21,7 @@ import { ControlledTextField } from "../../components/ControlledTextField";
 import { useStyles } from "./index.styles";
 import CustomPanelHeader from "../../components/CustomPanelHeader";
 import LoadingScreen from "../../components/LoadingScreen";
+import { formatDate } from "../../utility";
 
 const PlanetPanelComponent: React.FunctionComponent = () => {
   const [id] = useQueryParam("id", StringParam);
@@ -33,7 +34,7 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
   });
 
   const onRenderCustomHeader = () => {
-    return <CustomPanelHeader title="Planet Details" navigateTo="/planets" />;
+    return <CustomPanelHeader title="Planet Details" navigateTo="/planets" loading={loading} />;
   };
 
   function renderItemColumn(
@@ -44,6 +45,13 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
     const fieldContent = item[column?.key as keyof PlanetView] as string;
 
     switch (column?.key) {
+     case "height":
+      case "mass":
+      case "episodeID":
+        return <Stack style={{ alignItems: "center" }}>{fieldContent}</Stack>;
+      case "created":
+      case "edited":
+        return formatDate(fieldContent);
       default:
         return <span>{fieldContent}</span>;
     }
@@ -52,171 +60,188 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
     reset({
       name: data?.planet.name,
       climates: data?.planet.climates,
+      terrains: data?.planet.terrains,
       gravity: data?.planet.gravity,
       population: data?.planet.population,
       rotationPeriod: data?.planet.rotationPeriod,
+      surfaceWater: data?.planet.surfaceWater,
+      diameter: data?.planet.diameter,
+      created: data?.planet.created,
+      edited: data?.planet.edited,
+      orbitalPeriod: data?.planet.orbitalPeriod,
+      // diameter: data?.planet.diameter,
     });
   }, [data]);
-  if (loading) return (
-    <Panel type={PanelType.large} isBlocking={false}>
-      <LoadingScreen />
-    </Panel>
-  );
-  if (error) return (
-    <Panel type={PanelType.large} isBlocking={false}>
-      <p>Error : {error.message}</p>
-    </Panel>
-  );
+  if (loading)
+    return (
+      <Panel type={PanelType.large} isBlocking={false}>
+        <LoadingScreen />
+      </Panel>
+    );
+  if (error)
+    return (
+      <Panel type={PanelType.large} isBlocking={false}>
+        <p>Error : {error.message}</p>
+      </Panel>
+    );
   return (
-    <Panel
-      onRenderHeader={onRenderCustomHeader}
-      type={PanelType.large}
-      isOpen={true}
-      hasCloseButton={false}
-      isBlocking={false}
-    >
-      <form>
-        <ControlledTextField
-          label="Name"
-          control={control}
-          name="name"
-          readOnly
-        />
-        <Stack horizontal>
-          <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
-            <span>
-              {" "}
-              <ControlledTextField
-                label="Climates"
-                control={control}
-                name="climates"
-                readOnly
-              />
-            </span>
-          </Stack.Item>
-          <Stack.Item align="auto" style={{ flex: 1 }}>
-            <span>
-              {" "}
-              <ControlledTextField
-                label="Gravity"
-                control={control}
-                name="gravity"
-                readOnly
-              />
-            </span>
-          </Stack.Item>
+    <Stack style={{ position: "fixed", top: 0 }}>
+      <Panel
+        onRenderHeader={onRenderCustomHeader}
+        type={PanelType.large}
+        isOpen={true}
+        hasCloseButton={false}
+        isBlocking={false}
+      >
+        <Stack style={{ position: "relative", top: 80 }}>
+          <form>
+            <ControlledTextField
+              label="Name"
+              control={control}
+              name="name"
+              readOnly
+            />
+            <Stack horizontal>
+              <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
+                <span>
+                  {" "}
+                  <ControlledTextField
+                    label="Climates"
+                    control={control}
+                    name="climates"
+                    readOnly
+                  />
+                </span>
+              </Stack.Item>
+              <Stack.Item align="auto" style={{ flex: 1 }}>
+                <span>
+                  {" "}
+                  <ControlledTextField
+                    label="Gravity"
+                    control={control}
+                    name="gravity"
+                    readOnly
+                  />
+                </span>
+              </Stack.Item>
+            </Stack>
+            <Stack horizontal>
+              <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
+                <span>
+                  <ControlledTextField
+                    label="Population"
+                    control={control}
+                    name="population"
+                    readOnly
+                  />
+                </span>
+              </Stack.Item>
+              <Stack.Item align="auto" style={{ flex: 1 }}>
+                <span>
+                  <ControlledTextField
+                    label="Rotation Period"
+                    control={control}
+                    name="rotationPeriod"
+                    readOnly
+                  />
+                </span>
+              </Stack.Item>
+            </Stack>
+            <Stack horizontal>
+              <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
+                <span>
+                  <ControlledTextField
+                    label="Terrains"
+                    control={control}
+                    name="terrains"
+                    readOnly
+                  />
+                </span>
+              </Stack.Item>
+              <Stack.Item align="auto" style={{ flex: 1 }}>
+                <span>
+                  <ControlledTextField
+                    label="Surface Water"
+                    control={control}
+                    name="surfaceWater"
+                    readOnly
+                  />
+                </span>
+              </Stack.Item>
+            </Stack>
+            <Stack horizontal>
+              <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
+                <span>
+                  <ControlledTextField
+                    label="Diameter"
+                    control={control}
+                    name="diameter"
+                    readOnly
+                  />
+                </span>
+              </Stack.Item>
+              <Stack.Item align="auto" style={{ flex: 1 }}>
+                <span>
+                  <ControlledTextField
+                    label="Created on"
+                    control={control}
+                    name="created"
+                    converToDate={true}
+                    readOnly
+                  />
+                </span>
+              </Stack.Item>
+            </Stack>
+            <Stack horizontal>
+              <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
+                <span>
+                  <ControlledTextField
+                    label="Orbital Period"
+                    control={control}
+                    name="orbitalPeriod"
+                    readOnly
+                  />
+                </span>
+              </Stack.Item>
+              <Stack.Item align="auto" style={{ flex: 1 }}>
+                <span>
+                  <ControlledTextField
+                    label="Edited on"
+                    control={control}
+                    name="edited"
+                    converToDate
+                    readOnly
+                  />
+                </span>
+              </Stack.Item>
+            </Stack>
+            <Label>Film Connection</Label>
+            <DetailsList
+              items={data?.planet.filmConnection.films}
+              columns={columnsFilmConnection}
+              onRenderItemColumn={renderItemColumn}
+              selectionMode={SelectionMode.none}
+              layoutMode={DetailsListLayoutMode.fixedColumns}
+              constrainMode={ConstrainMode.unconstrained}
+              isHeaderVisible={true}
+            />
+            <Label>Resident Connection</Label>
+            <Label>
+              Total Count -{data?.planet.residentConnection.totalCount}
+            </Label>
+            <DetailsList
+              items={data?.planet.residentConnection.residents}
+              columns={columnsResidents}
+              onRenderItemColumn={renderItemColumn}
+              selectionMode={SelectionMode.none}
+              layoutMode={DetailsListLayoutMode.fixedColumns}
+              constrainMode={ConstrainMode.unconstrained}
+              isHeaderVisible={true}
+            />
+          </form>
         </Stack>
-        <Stack horizontal>
-          <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
-            <span>
-              <ControlledTextField
-                label="Population"
-                control={control}
-                name="Population"
-                readOnly
-              />
-            </span>
-          </Stack.Item>
-          <Stack.Item align="auto" style={{ flex: 1 }}>
-            <span>
-              <ControlledTextField
-                label="Rotation Period"
-                control={control}
-                name="rotationPeriod"
-                readOnly
-              />
-            </span>
-          </Stack.Item>
-        </Stack>
-        <Stack horizontal>
-          <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
-            <span>
-              <ControlledTextField
-                label="Terrains"
-                control={control}
-                name="terrains"
-                readOnly
-              />
-            </span>
-          </Stack.Item>
-          <Stack.Item align="auto" style={{ flex: 1 }}>
-            <span>
-              <ControlledTextField
-                label="Surface Water"
-                control={control}
-                name="surfaceWater"
-                readOnly
-              />
-            </span>
-          </Stack.Item>
-        </Stack>
-        <Stack horizontal>
-          <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
-            <span>
-              <ControlledTextField
-                label="Diameter"
-                control={control}
-                name="diameter"
-                readOnly
-              />
-            </span>
-          </Stack.Item>
-          <Stack.Item align="auto" style={{ flex: 1 }}>
-            <span>
-              <ControlledTextField
-                label="Created"
-                control={control}
-                name="created"
-                readOnly
-              />
-            </span>
-          </Stack.Item>
-        </Stack>
-        <Stack horizontal>
-          <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
-            <span>
-              <ControlledTextField
-                label="Orbital Period"
-                control={control}
-                name="orbitalPeriod"
-                readOnly
-              />
-            </span>
-          </Stack.Item>
-          <Stack.Item align="auto" style={{ flex: 1 }}>
-            <span>
-              <ControlledTextField
-                label="Edited"
-                control={control}
-                name="edited"
-                readOnly
-              />
-            </span>
-          </Stack.Item>
-        </Stack>
-        <Label>Film Connection</Label>
-        <DetailsList
-          items={data?.planet.filmConnection.films}
-          columns={columnsFilmConnection}
-          onRenderItemColumn={renderItemColumn}
-          selectionMode={SelectionMode.none}
-          layoutMode={DetailsListLayoutMode.fixedColumns}
-          constrainMode={ConstrainMode.unconstrained}
-          isHeaderVisible={true}
-        />
-        <Label>Resident Connection</Label>
-        <Label>Total Count -{data?.planet.residentConnection.totalCount}</Label>
-        <DetailsList
-          items={data?.planet.residentConnection.residents}
-          columns={columnsResidents}
-          onRenderItemColumn={renderItemColumn}
-          selectionMode={SelectionMode.none}
-          layoutMode={DetailsListLayoutMode.fixedColumns}
-          constrainMode={ConstrainMode.unconstrained}
-          isHeaderVisible={true}
-        />
-      </form>
-    </Panel>
+      </Panel>
+    </Stack>
   );
 };
 export default PlanetPanelComponent;

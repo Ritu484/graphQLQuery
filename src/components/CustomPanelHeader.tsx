@@ -2,23 +2,32 @@ import { IconButton } from "@fluentui/react";
 import { Stack } from "@fluentui/react";
 import { makeStyles } from "@fluentui/react";
 import { useNavigate } from "react-router-dom";
+import LoadingScreen from "./LoadingScreen";
 
 type Props = {
   title: string;
   navigateTo: string;
+  loading:boolean
 };
 
 const CustomPanelHeader = (props: Props) => {
   const useStyles = makeStyles((theme) => ({
     headerContainer: {
-      display: "flex",
-      minWidth: "100%",
-      marginBottom: 24,
+      position: "fixed",
+      top: 0,
+      width: "100%",
       height: "50px",
       alignItems: "center",
-      justifyContent: "center",
       boxShadow: "0px 5px 5px 0px rgba(0, 0, 0, 0.1)",
       fontSize: 18,
+      backgroundColor: "white",
+      zIndex: 1,
+    },
+    titleContainer: {
+      fontWeight: 600,
+      paddingLeft: 20,
+      display: "flex",
+      flex: 1,
     },
   }));
   let navigate = useNavigate();
@@ -28,25 +37,12 @@ const CustomPanelHeader = (props: Props) => {
   const handleCloseClick = () => {
     navigate(navigateTo);
   };
+  if (props.loading)
+  return(<LoadingScreen/>)
   return (
     <Stack horizontal className={styles.headerContainer}>
-      <Stack
-        style={{
-          display: "flex",
-          fontWeight: 600,
-          paddingLeft: 20,
-          width: "100%",
-        }}
-      >
-        {title}
-      </Stack>
-      <Stack
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      <Stack className={styles.titleContainer}>{title}</Stack>
+      <Stack style={{ display: "flex", marginRight: 10 }}>
         <IconButton iconProps={iconProps} onClick={handleCloseClick} />
       </Stack>
     </Stack>

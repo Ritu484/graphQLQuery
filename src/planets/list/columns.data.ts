@@ -1,4 +1,5 @@
 import { IColumn } from "@fluentui/react/lib/DetailsList";
+
 export const columns: IColumn[] = [
   {
     key: "name",
@@ -29,7 +30,7 @@ export const columns: IColumn[] = [
     name: "Population",
     fieldName: "population",
     minWidth: 50,
-    maxWidth: 200,
+    maxWidth: 100,
     isResizable: true,
   } as IColumn,
   {
@@ -39,6 +40,7 @@ export const columns: IColumn[] = [
     minWidth: 50,
     maxWidth: 100,
     isResizable: true,
+    
   } as IColumn,
   {
     key: "terrains",
@@ -47,7 +49,7 @@ export const columns: IColumn[] = [
     minWidth: 50,
     maxWidth: 200,
     isResizable: true,
-    isMultiLine:true
+    isMultiLine: true,
   } as IColumn,
   {
     key: "surfaceWater",

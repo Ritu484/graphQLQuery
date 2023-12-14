@@ -23,10 +23,8 @@ export const useStyles = makeStyles((theme) => ({
     position: "relative",
     top: "10vh",
     left: "200px",
-    overflowY: "scroll",
-    overflowX: "scroll",
-  //  height: "90vh",
-    //width: "85vw",
     alignItems: "center",
+    overflow:'auto',
+    overflowX:'scroll'
   },
 }));

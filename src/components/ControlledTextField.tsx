@@ -18,7 +18,7 @@ export const ControlledTextField = (
         <TextField
           {...props}
           onChange={onChange}
-          value={props.converToDate ? formatDate(value) : value}
+          value={props.converToDate && value? formatDate(value) : value}
           onBlur={onBlur}
           name={fieldName}
           errorMessage={error && error.message}

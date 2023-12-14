@@ -2,9 +2,15 @@ import { FontSizes, makeStyles } from "@fluentui/react";
 
 export const useStyles = makeStyles((theme) => ({
   centeredContainer: {
-    height:'90vh',
-    width:'90vw',
+    height: "90vh",
+    width: "90vw",
     alignItems: "center",
     justifyContent: "center",
+  },
+  wrapContainer: {
+    display: "flex",
+    flexWrap: "wrap",
+    wordBreak: "break-all",
+    whiteSpace: "break-spaces",
   },
 }));

@@ -30,9 +30,9 @@ const AllSpeciesListView: React.FunctionComponent = () => {
 
   if (error) return <p>Error : {error.message}</p>;
   return (
-    <Stack>
+    <Stack >
       {loading ? (
-       <LoadingScreen/>
+        <LoadingScreen />
       ) : (
         <DetailsList
           items={data.allSpecies.species}

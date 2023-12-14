@@ -18,7 +18,7 @@ export const columnsAllSpecies: IColumn[] = [
   } as IColumn,
   {
     key: "created",
-    name: "Created",
+    name: "Created on",
     fieldName: "created",
     minWidth: 50,
     maxWidth: 200,
@@ -34,10 +34,10 @@ export const columnsAllSpecies: IColumn[] = [
   } as IColumn,
   {
     key: "edited",
-    name: "Edited",
+    name: "Edited on",
     fieldName: "edited",
     minWidth: 50,
-    maxWidth: 200,
+    maxWidth: 150,
     isResizable: true,
   } as IColumn,
   {
@@ -45,7 +45,7 @@ export const columnsAllSpecies: IColumn[] = [
     name: "Average Life Span",
     fieldName: "averageLifespan",
     minWidth: 50,
-    maxWidth: 200,
+    maxWidth: 150,
     isResizable: true,
   } as IColumn,
   {
@@ -53,7 +53,7 @@ export const columnsAllSpecies: IColumn[] = [
     name: "Average Height",
     fieldName: "averageHeight",
     minWidth: 50,
-    maxWidth: 200,
+    maxWidth: 100,
     isResizable: true,
   } as IColumn,
 ];
