@@ -22,6 +22,7 @@ import { useStyles } from "./index.styles";
 import CustomPanelHeader from "../../components/CustomPanelHeader";
 import LoadingScreen from "../../components/LoadingScreen";
 import { formatDate } from "../../utility";
+import { ColumnsDisplay } from "./ColumnsDisplay";
 
 const PlanetPanelComponent: React.FunctionComponent = () => {
   const [id] = useQueryParam("id", StringParam);
@@ -34,7 +35,7 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
   });
 
   const onRenderCustomHeader = () => {
-    return <CustomPanelHeader title="Planet Details" navigateTo="/planets"  />;
+    return <CustomPanelHeader title="Planet Details" navigateTo="/planets" />;
   };
 
   function renderItemColumn(
@@ -42,19 +43,7 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
     index: number | undefined,
     column: IColumn | undefined
   ) {
-    const fieldContent = item[column?.key as keyof PlanetView] as string;
-
-    switch (column?.key) {
-     case "height":
-      case "mass":
-      case "episodeID":
-        return <Stack style={{ alignItems: "center" }}>{fieldContent}</Stack>;
-      case "created":
-      case "edited":
-        return formatDate(fieldContent);
-      default:
-        return <span>{fieldContent}</span>;
-    }
+    return <ColumnsDisplay item={item} column={column} />;
   }
   useEffect(() => {
     reset({
@@ -72,7 +61,7 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
       // diameter: data?.planet.diameter,
     });
   }, [data]);
-  
+
   if (loading)
     return (
       <Panel type={PanelType.large} isBlocking={false}>
@@ -102,7 +91,7 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
               name="name"
               readOnly
             />
-            <Stack horizontal>
+            <Stack horizontal style={{ marginTop: 16 }}>
               <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
                 <span>
                   {" "}
@@ -126,7 +115,7 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
                 </span>
               </Stack.Item>
             </Stack>
-            <Stack horizontal>
+            <Stack horizontal style={{ marginTop: 16 }}>
               <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
                 <span>
                   <ControlledTextField
@@ -148,7 +137,7 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
                 </span>
               </Stack.Item>
             </Stack>
-            <Stack horizontal>
+            <Stack horizontal style={{ marginTop: 16 }}>
               <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
                 <span>
                   <ControlledTextField
@@ -170,7 +159,7 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
                 </span>
               </Stack.Item>
             </Stack>
-            <Stack horizontal>
+            <Stack horizontal style={{ marginTop: 16 }}>
               <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
                 <span>
                   <ControlledTextField
@@ -193,7 +182,7 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
                 </span>
               </Stack.Item>
             </Stack>
-            <Stack horizontal>
+            <Stack horizontal style={{ marginTop: 16 }}>
               <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
                 <span>
                   <ControlledTextField
@@ -216,7 +205,7 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
                 </span>
               </Stack.Item>
             </Stack>
-            <Label>Film Connection</Label>
+            <Label style={{ marginTop: 16 }}>Film Connection</Label>
             <DetailsList
               items={data?.planet.filmConnection.films}
               columns={columnsFilmConnection}
@@ -226,7 +215,7 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
               constrainMode={ConstrainMode.unconstrained}
               isHeaderVisible={true}
             />
-            <Label>Resident Connection</Label>
+            <Label style={{ marginTop: 16 }}>Resident Connection</Label>
             <Label>
               Total Count -{data?.planet.residentConnection.totalCount}
             </Label>

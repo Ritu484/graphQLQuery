@@ -8,6 +8,7 @@ import {
   IColumn,
   IDetailsHeaderProps,
   DetailsHeader,
+  IDetailsListStyles,
 } from "@fluentui/react/lib/DetailsList";
 import { IPlanet } from "./types";
 import { columns } from "./columns.data";
@@ -17,6 +18,21 @@ import { Stack } from "@fluentui/react";
 import { ColumnsDisplay } from "./ColumnsDisplay";
 import LoadingScreen from "../../components/LoadingScreen";
 
+const gridStyles: Partial<IDetailsListStyles> = {
+  headerWrapper: {
+    position: "fixed",
+    left: 200,
+    top: 50,
+  },
+  contentWrapper: {
+    position: "fixed",
+    left: 200,
+    top: 120,
+    right: 0,
+    bottom: 0,
+    overflow: "scroll",
+  },
+};
 const AllPlanetListView: React.FunctionComponent = () => {
   const { loading, error, data } = useQuery(AllPlanets);
 
@@ -47,7 +63,7 @@ const AllPlanetListView: React.FunctionComponent = () => {
           layoutMode={DetailsListLayoutMode.fixedColumns}
           constrainMode={ConstrainMode.unconstrained}
           isHeaderVisible={true}
-          
+          styles={gridStyles}
         />
       )}
       <Outlet />

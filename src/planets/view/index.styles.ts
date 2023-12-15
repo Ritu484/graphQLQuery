@@ -1,4 +1,4 @@
-import { FontSizes, makeStyles } from "@fluentui/react";
+import { makeStyles } from "@fluentui/react";
 
 export const useStyles = makeStyles((theme) => ({
   centeredContainer: {
@@ -13,5 +13,11 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     boxShadow: "0px 5px 5px 0px rgba(0, 0, 0, 0.1)",
     fontSize: 18,
+  },
+  wrapContainer: {
+    display: "flex",
+    flexWrap: "wrap",
+    wordBreak: "break-all",
+    whiteSpace: "break-spaces",
   },
 }));

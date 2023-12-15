@@ -15,4 +15,10 @@ export const useStyles = makeStyles((theme) => ({
     boxShadow: "0px 5px 10px 0px rgba(0, 0, 0, 0.5)",
     fontSize: 18,
   },
+  wrapContainer: {
+    display: "flex",
+    flexWrap: "wrap",
+    wordBreak: "break-all",
+    whiteSpace: "break-spaces",
+  },
 }));

@@ -11,12 +11,12 @@ export type SpeciesView = {
 };
 
 export type FilmConnection = {
-  films: Films;
+  films: [Films];
 };
 
 export type Films = {
   director: string;
-  producers: string;
+  producers: [string];
   releaseDate: string;
   title: string;
   created: string;

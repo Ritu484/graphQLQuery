@@ -17,7 +17,7 @@ import {
   Stack,
 } from "@fluentui/react";
 import { ShimmeredDetailsList } from "@fluentui/react/lib/ShimmeredDetailsList";
-import { useSetInterval, useConst } from "@fluentui/react-hooks";
+import { useConst } from "@fluentui/react-hooks";
 const wrapperClass = mergeStyles({
   marginTop: 100,
   padding: 2,

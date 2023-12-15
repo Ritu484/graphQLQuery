@@ -4,7 +4,7 @@ export const columnsSpeciesDetailView: IColumn[] = [
     key: "director",
     name: "Director",
     minWidth: 50,
-    maxWidth: 200,
+    maxWidth: 150,
     isResizable: true,
   } as IColumn,
   {
@@ -18,7 +18,7 @@ export const columnsSpeciesDetailView: IColumn[] = [
     key: "releaseDate",
     name: "Release Date",
     minWidth: 50,
-    maxWidth: 200,
+    maxWidth: 100,
     isResizable: true,
   } as IColumn,
   {
@@ -32,7 +32,7 @@ export const columnsSpeciesDetailView: IColumn[] = [
     key: "created",
     name: "Created on",
     minWidth: 50,
-    maxWidth: 200,
+    maxWidth: 150,
     isResizable: true,
   } as IColumn,
  

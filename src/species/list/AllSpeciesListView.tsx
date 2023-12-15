@@ -40,12 +40,9 @@ const onRenderDetailsHeader: IRenderFunction<IDetailsHeaderProps> = (
 };
 const gridStyles: Partial<IDetailsListStyles> = {
   headerWrapper: {
-    // flex: "0 0 auto",
     position: "fixed",
     left: 200,
     top: 50,
-    // right:0,
-    //  backgroundColor: "red",
   },
   contentWrapper: {
     position: "fixed",
@@ -53,15 +50,11 @@ const gridStyles: Partial<IDetailsListStyles> = {
     top: 120,
     right: 0,
     bottom: 0,
-    // backgroundColor: "red",
-
-    // width:'85vw',
     overflow: "scroll",
   },
 };
 
 const AllSpeciesListView: React.FunctionComponent = () => {
- 
   const { loading, error, data } = useQuery(AllSpecies);
   function renderItemColumn(
     item: ISpecies,

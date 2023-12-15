@@ -14,6 +14,7 @@ import {
 } from "@fluentui/react/lib/DetailsList";
 import { useQuery } from "@apollo/client";
 
+import { useStyles } from "./index.styles";
 import { SpeciesView } from "./types";
 import { Species } from "./query";
 import { columnsSpeciesDetailView } from "./columns.data";
@@ -25,19 +26,15 @@ import LoadingScreenPanel from "../../components/LoadingScreenPanel";
 import { Overflow } from "@fluentui/react-components";
 
 const PlanetPanelComponent: React.FunctionComponent = () => {
+  const styles = useStyles();
   const [speciesId] = useQueryParam("speciesId", StringParam);
   const { reset, control } = useForm();
   const { loading, error, data } = useQuery(Species, {
     variables: { speciesId: speciesId },
   });
-
+  console.log(data);
   const onRenderCustomHeader = () => {
-    return (
-      <CustomPanelHeader
-        title="Species Details"
-        navigateTo="/species"
-      />
-    );
+    return <CustomPanelHeader title="Species Details" navigateTo="/species" />;
   };
 
   function renderItemColumn(
@@ -50,6 +47,17 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
     switch (column?.key) {
       case "created":
         return formatDate(fieldContent);
+      case "producers":
+        const fieldArrayContent = item[
+          column?.key as keyof SpeciesView
+        ] as string[];
+        return (
+          <Stack className={styles.wrapContainer}>
+            {fieldArrayContent.map((value: string, index: number) =>
+              index < fieldContent.length - 1 ? value + ", " : value
+            )}
+          </Stack>
+        );
       default:
         return <span>{fieldContent}</span>;
     }
@@ -81,144 +89,142 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
     );
 
   return (
-   
-      <Panel
-        onRenderHeader={onRenderCustomHeader}
-        type={PanelType.large}
-        isOpen={true}
-        hasCloseButton={false}
-        isBlocking={false}
-        styles={{ main: { overflow: "hidden" } }}
-      >
-        {loading ? (
-          <LoadingScreenPanel />
-        ) : (
-          <Stack
-            style={{
-              position: "relative",
-              top: 80,
-            }}
-          >
-            <form>
-              <ControlledTextField
-                label="Classification"
-                control={control}
-                name="classification"
-                readOnly
-              />
-              <Stack horizontal style={{ marginTop: 16 }}>
-                <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
-                  <span>
-                    <ControlledTextField
-                      label="Created on"
-                      control={control}
-                      name="created"
-                      converToDate={true}
-                      readOnly
-                    />
-                  </span>
-                </Stack.Item>
-                <Stack.Item align="auto" style={{ flex: 1 }}>
-                  <span>
-                    {" "}
-                    <ControlledTextField
-                      label="Average Height"
-                      control={control}
-                      name="averageHeight"
-                      readOnly
-                    />
-                  </span>
-                </Stack.Item>
-              </Stack>
-              <Stack horizontal style={{ marginTop: 16 }}>
-                <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
-                  <span>
-                    <ControlledTextField
-                      label="Average Life Span"
-                      control={control}
-                      name="averageLifespan"
-                      readOnly
-                    />
-                  </span>
-                </Stack.Item>
-                <Stack.Item align="auto" style={{ flex: 1 }}>
-                  <span>
-                    <ControlledTextField
-                      label="Edited On"
-                      control={control}
-                      name="edited"
-                      converToDate={true}
-                      readOnly
-                    />
-                  </span>
-                </Stack.Item>
-              </Stack>
-              <Label style={{ marginTop: 16 }}>Film Connection</Label>
-              <DetailsList
-                items={data?.species.filmConnection.films}
-                columns={columnsSpeciesDetailView}
-                onRenderItemColumn={renderItemColumn}
-                selectionMode={SelectionMode.none}
-                layoutMode={DetailsListLayoutMode.fixedColumns}
-                constrainMode={ConstrainMode.unconstrained}
-                isHeaderVisible={true}
-              />
-              <Label style={{ marginTop: 16 }}>Home World</Label>
-              <ControlledTextField
-                label="Name"
-                control={control}
-                name="homeName"
-                readOnly
-              />
-              <Stack horizontal style={{ marginTop: 16 }}>
-                <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
-                  <span>
-                    <ControlledTextField
-                      label="Population"
-                      control={control}
-                      name="population"
-                      readOnly
-                    />
-                  </span>
-                </Stack.Item>
-                <Stack.Item align="auto" style={{ flex: 1 }}>
-                  <span>
-                    <ControlledTextField
-                      label="Terrains"
-                      control={control}
-                      name="terrains"
-                      readOnly
-                    />
-                  </span>
-                </Stack.Item>
-              </Stack>
-              <Stack horizontal style={{ marginTop: 16 }}>
-                <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
-                  <span>
-                    <ControlledTextField
-                      label="Surface Water"
-                      control={control}
-                      name="surfaceWater"
-                      readOnly
-                    />
-                  </span>
-                </Stack.Item>
-                <Stack.Item align="auto" style={{ flex: 1 }}>
-                  <span>
-                    <ControlledTextField
-                      label="Rotation Period"
-                      control={control}
-                      name="rotationPeriod"
-                      readOnly
-                    />
-                  </span>
-                </Stack.Item>
-              </Stack>
-            </form>
-          </Stack>
-        )}
-      </Panel>
-  
+    <Panel
+      onRenderHeader={onRenderCustomHeader}
+      type={PanelType.large}
+      isOpen={true}
+      hasCloseButton={false}
+      isBlocking={false}
+      //  styles={{ main: { overflow: "hidden" } }}
+    >
+      {loading ? (
+        <LoadingScreenPanel />
+      ) : (
+        <Stack
+          style={{
+            position: "relative",
+            top: 80,
+          }}
+        >
+          <form>
+            <ControlledTextField
+              label="Classification"
+              control={control}
+              name="classification"
+              readOnly
+            />
+            <Stack horizontal style={{ marginTop: 16 }}>
+              <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
+                <span>
+                  <ControlledTextField
+                    label="Created on"
+                    control={control}
+                    name="created"
+                    converToDate={true}
+                    readOnly
+                  />
+                </span>
+              </Stack.Item>
+              <Stack.Item align="auto" style={{ flex: 1 }}>
+                <span>
+                  {" "}
+                  <ControlledTextField
+                    label="Average Height"
+                    control={control}
+                    name="averageHeight"
+                    readOnly
+                  />
+                </span>
+              </Stack.Item>
+            </Stack>
+            <Stack horizontal style={{ marginTop: 16 }}>
+              <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
+                <span>
+                  <ControlledTextField
+                    label="Average Life Span"
+                    control={control}
+                    name="averageLifespan"
+                    readOnly
+                  />
+                </span>
+              </Stack.Item>
+              <Stack.Item align="auto" style={{ flex: 1 }}>
+                <span>
+                  <ControlledTextField
+                    label="Edited On"
+                    control={control}
+                    name="edited"
+                    converToDate={true}
+                    readOnly
+                  />
+                </span>
+              </Stack.Item>
+            </Stack>
+            <Label style={{ marginTop: 16 }}>Film Connection</Label>
+            <DetailsList
+              items={data?.species.filmConnection.films}
+              columns={columnsSpeciesDetailView}
+              onRenderItemColumn={renderItemColumn}
+              selectionMode={SelectionMode.none}
+              layoutMode={DetailsListLayoutMode.fixedColumns}
+              constrainMode={ConstrainMode.unconstrained}
+              isHeaderVisible={true}
+            />
+            <Label style={{ marginTop: 16 }}>Home World</Label>
+            <ControlledTextField
+              label="Name"
+              control={control}
+              name="homeName"
+              readOnly
+            />
+            <Stack horizontal style={{ marginTop: 16 }}>
+              <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
+                <span>
+                  <ControlledTextField
+                    label="Population"
+                    control={control}
+                    name="population"
+                    readOnly
+                  />
+                </span>
+              </Stack.Item>
+              <Stack.Item align="auto" style={{ flex: 1 }}>
+                <span>
+                  <ControlledTextField
+                    label="Terrains"
+                    control={control}
+                    name="terrains"
+                    readOnly
+                  />
+                </span>
+              </Stack.Item>
+            </Stack>
+            <Stack horizontal style={{ marginTop: 16 }}>
+              <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
+                <span>
+                  <ControlledTextField
+                    label="Surface Water"
+                    control={control}
+                    name="surfaceWater"
+                    readOnly
+                  />
+                </span>
+              </Stack.Item>
+              <Stack.Item align="auto" style={{ flex: 1 }}>
+                <span>
+                  <ControlledTextField
+                    label="Rotation Period"
+                    control={control}
+                    name="rotationPeriod"
+                    readOnly
+                  />
+                </span>
+              </Stack.Item>
+            </Stack>
+          </form>
+        </Stack>
+      )}
+    </Panel>
   );
 };
 export default PlanetPanelComponent;
