@@ -30,13 +30,16 @@ function App() {
   const [isLight, setIsLight] = useState(true);
   return (
     <ThemeProvider
-      style={{ padding: "8px" }}
+      style={{ padding: "8px", overflow: "hidden" }}
       theme={isLight ? lightTheme : darkTheme}
     >
       <Stack.Item className={styles.titleBarContainer}>
         <TitleBar />
       </Stack.Item>
-      <Stack horizontal style={{ position: "absolute", top: 0, left: 0}}>
+      <Stack
+        horizontal
+        style={{ position: "absolute", top: 0, left: 0, overflow: "hidden" }}
+      >
         <Stack.Item className={styles.sideBarContainer}>
           <SideBar />
         </Stack.Item>

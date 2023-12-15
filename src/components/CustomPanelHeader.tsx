@@ -7,7 +7,7 @@ import LoadingScreen from "./LoadingScreen";
 type Props = {
   title: string;
   navigateTo: string;
-  loading:boolean
+ // loading:boolean
 };
 
 const CustomPanelHeader = (props: Props) => {
@@ -37,8 +37,8 @@ const CustomPanelHeader = (props: Props) => {
   const handleCloseClick = () => {
     navigate(navigateTo);
   };
-  if (props.loading)
-  return(<LoadingScreen/>)
+  // if (props.loading)
+  // return(<LoadingScreen/>)
   return (
     <Stack horizontal className={styles.headerContainer}>
       <Stack className={styles.titleContainer}>{title}</Stack>

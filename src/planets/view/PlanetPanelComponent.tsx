@@ -34,7 +34,7 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
   });
 
   const onRenderCustomHeader = () => {
-    return <CustomPanelHeader title="Planet Details" navigateTo="/planets" loading={loading} />;
+    return <CustomPanelHeader title="Planet Details" navigateTo="/planets"  />;
   };
 
   function renderItemColumn(
@@ -72,6 +72,7 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
       // diameter: data?.planet.diameter,
     });
   }, [data]);
+  
   if (loading)
     return (
       <Panel type={PanelType.large} isBlocking={false}>

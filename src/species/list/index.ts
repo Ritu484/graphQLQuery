@@ -1,3 +1,2 @@
-import AllSpeciesListView from "./AllSpeciesListView";
-
+import AllSpeciesListView from "./AllSpeciesListView"
 export default AllSpeciesListView;

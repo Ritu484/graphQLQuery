@@ -21,6 +21,8 @@ import { ControlledTextField } from "../../components/ControlledTextField";
 import CustomPanelHeader from "../../components/CustomPanelHeader";
 import LoadingScreen from "../../components/LoadingScreen";
 import { formatDate } from "../../utility";
+import LoadingScreenPanel from "../../components/LoadingScreenPanel";
+import { Overflow } from "@fluentui/react-components";
 
 const PlanetPanelComponent: React.FunctionComponent = () => {
   const [speciesId] = useQueryParam("speciesId", StringParam);
@@ -34,7 +36,6 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
       <CustomPanelHeader
         title="Species Details"
         navigateTo="/species"
-        loading={loading}
       />
     );
   };
@@ -73,36 +74,29 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
   if (error)
     return (
       <Stack style={{ position: "fixed", top: 0 }}>
-        <Panel type={PanelType.large} isBlocking={false}>
+        <Panel type={PanelType.large} isBlocking={true}>
           <p>Error : {error.message}</p>
         </Panel>
       </Stack>
     );
 
   return (
-    <Stack
-      style={{
-        position: "fixed",
-
-        backgroundColor: "orange",
-      }}
-    >
+   
       <Panel
         onRenderHeader={onRenderCustomHeader}
         type={PanelType.large}
         isOpen={true}
         hasCloseButton={false}
         isBlocking={false}
+        styles={{ main: { overflow: "hidden" } }}
       >
         {loading ? (
-          <LoadingScreen />
+          <LoadingScreenPanel />
         ) : (
           <Stack
             style={{
               position: "relative",
               top: 80,
-              height: "100vh",
-              width: "100vw",
             }}
           >
             <form>
@@ -112,7 +106,7 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
                 name="classification"
                 readOnly
               />
-              <Stack horizontal>
+              <Stack horizontal style={{ marginTop: 16 }}>
                 <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
                   <span>
                     <ControlledTextField
@@ -136,7 +130,7 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
                   </span>
                 </Stack.Item>
               </Stack>
-              <Stack horizontal>
+              <Stack horizontal style={{ marginTop: 16 }}>
                 <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
                   <span>
                     <ControlledTextField
@@ -159,7 +153,7 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
                   </span>
                 </Stack.Item>
               </Stack>
-              <Label>Film Connection</Label>
+              <Label style={{ marginTop: 16 }}>Film Connection</Label>
               <DetailsList
                 items={data?.species.filmConnection.films}
                 columns={columnsSpeciesDetailView}
@@ -169,14 +163,14 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
                 constrainMode={ConstrainMode.unconstrained}
                 isHeaderVisible={true}
               />
-              <Label>Home World</Label>
+              <Label style={{ marginTop: 16 }}>Home World</Label>
               <ControlledTextField
                 label="Name"
                 control={control}
                 name="homeName"
                 readOnly
               />
-              <Stack horizontal>
+              <Stack horizontal style={{ marginTop: 16 }}>
                 <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
                   <span>
                     <ControlledTextField
@@ -198,7 +192,7 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
                   </span>
                 </Stack.Item>
               </Stack>
-              <Stack horizontal>
+              <Stack horizontal style={{ marginTop: 16 }}>
                 <Stack.Item align="auto" style={{ flex: 1, marginRight: 20 }}>
                   <span>
                     <ControlledTextField
@@ -224,7 +218,7 @@ const PlanetPanelComponent: React.FunctionComponent = () => {
           </Stack>
         )}
       </Panel>
-    </Stack>
+  
   );
 };
 export default PlanetPanelComponent;

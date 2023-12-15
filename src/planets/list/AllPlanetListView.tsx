@@ -30,7 +30,7 @@ const AllPlanetListView: React.FunctionComponent = () => {
 
   if (error)
     return (
-      <Panel type={PanelType.large} isBlocking={false}>
+      <Panel type={PanelType.large} isBlocking={true}>
         <p>Error : {error.message}</p>
       </Panel>
     );
@@ -47,6 +47,7 @@ const AllPlanetListView: React.FunctionComponent = () => {
           layoutMode={DetailsListLayoutMode.fixedColumns}
           constrainMode={ConstrainMode.unconstrained}
           isHeaderVisible={true}
+          
         />
       )}
       <Outlet />

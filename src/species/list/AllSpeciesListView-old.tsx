@@ -8,12 +8,8 @@ import {
   ConstrainMode,
   IColumn,
   IDetailsListStyles,
-  IDetailsHeaderProps,
-  IDetailsColumnRenderTooltipProps,
-  IDetailsFooterProps,
-  DetailsRow,
 } from "@fluentui/react/lib/DetailsList";
-import { IRenderFunction, Stack, TooltipHost } from "@fluentui/react";
+import { Stack } from "@fluentui/react";
 
 import { ISpecies } from "./types";
 import { columnsAllSpecies } from "./columns.data";
@@ -23,45 +19,9 @@ import { ColumnsDisplay } from "./ColumnsDisplay";
 import LoadingScreen from "../../components/LoadingScreen";
 import { mergeStyleSets } from "@fluentui/react/lib/Styling";
 
-const onRenderDetailsHeader: IRenderFunction<IDetailsHeaderProps> = (
-  props,
-  defaultRender
-) => {
-  if (!props) {
-    return null;
-  }
-  const onRenderColumnHeaderTooltip: IRenderFunction<
-    IDetailsColumnRenderTooltipProps
-  > = (tooltipHostProps) => <TooltipHost {...tooltipHostProps} />;
-  return defaultRender!({
-    ...props,
-    onRenderColumnHeaderTooltip,
-  });
-};
-const gridStyles: Partial<IDetailsListStyles> = {
-  headerWrapper: {
-    // flex: "0 0 auto",
-    position: "fixed",
-    left: 200,
-    top: 50,
-    // right:0,
-    //  backgroundColor: "red",
-  },
-  contentWrapper: {
-    position: "fixed",
-    left: 200,
-    top: 120,
-    right: 0,
-    bottom: 0,
-    // backgroundColor: "red",
-
-    // width:'85vw',
-    overflow: "scroll",
-  },
-};
 
 const AllSpeciesListView: React.FunctionComponent = () => {
- 
+  const styles = useStyles();
   const { loading, error, data } = useQuery(AllSpecies);
   function renderItemColumn(
     item: ISpecies,
@@ -70,6 +30,26 @@ const AllSpeciesListView: React.FunctionComponent = () => {
   ) {
     return <ColumnsDisplay item={item} columnKey={column?.key} />;
   }
+const gridStyles: Partial<IDetailsListStyles> = {
+  root: {
+   // overflowX: "scroll",
+    selectors: {
+      "& [role=grid]": {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "start",
+        height: "60vh",
+      },
+    },
+  },
+  headerWrapper: {
+    flex: "0 0 auto",
+  },
+  contentWrapper: {
+    flex: "1 1 auto",
+   // overflow: "hidden",
+  },
+};
 
   if (error) return <p>Error : {error.message}</p>;
 
